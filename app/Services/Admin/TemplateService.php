@@ -87,7 +87,7 @@ class TemplateService
         //文件名
         $name = request('name') . '.' . $originalExtension;
 
-        $path = request('file')->storeAs('files/template/' . request('name'), $name, 'admin');
+        $path = request('file')->storeAs('uploads/files/template/' . request('name'), $name, 'public');
         return $path;
     }
 
