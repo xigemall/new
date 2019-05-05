@@ -84,7 +84,7 @@ return [
     ],
     'string'               => 'max:attribute 一定是字符串.',
     'timezone'             => 'The :attribute must be a valid zone.',
-    'unique'               => 'The :attribute has already been taken.',
+    'unique'               => ':attribute 已经存在.',
     'uploaded'             => ':attribute 无法上传.',
     'url'                  => 'The :attribute format is invalid.',
 

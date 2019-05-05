@@ -57,7 +57,10 @@ class TemplateService
      */
     public function store($request)
     {
-        $this->saveTemplateFile($request);
+        $path = $this->saveTemplateFile($request);
+        $request->offsetSet('file', $path);
+        $data = Template::create($request->input());
+        return $data;
     }
 
     /**
@@ -66,13 +69,10 @@ class TemplateService
     protected function saveTemplateFile()
     {
         // 保存上传的压缩文件
-        $path = $this->makeCompressionFile();
-
-        // 解压文件地址
-        $compressionFilePath = storage_path($path);
+        $file = $this->makeCompressionFile();
         //解压文件
-        $this->compressionFile($compressionFilePath);
-
+        $this->compressionFile($file);
+        return $file['path'];
     }
 
     /**
@@ -86,15 +86,19 @@ class TemplateService
         $originalExtension = $file->getClientOriginalExtension();
         //文件名
         $name = request('name') . '.' . $originalExtension;
-
-        $path = request('file')->storeAs('uploads/files/template/' . request('name'), $name, 'public');
-        return $path;
+        $path = 'files/template/' . request('name');
+        $fileName = request('file')->storeAs($path, $name, 'admin');
+        return ['path' => 'uploads/' . $path, 'file' => 'uploads/' . $fileName];
     }
 
-    protected function compressionFile(string $path)
+    /**
+     * 解压文件
+     * @param array $file
+     */
+    protected function compressionFile(array $file)
     {
-
-//        $filesPath = glob(public_path('uploads/files/template/test/'));
-//        Zipper::make($path)->add($filesPath)->close();
+        $fileName = public_path($file['file']);
+        $path = public_path($file['path']);
+        Zipper::make($fileName)->extractTo($path);
     }
 }
