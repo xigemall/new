@@ -7,48 +7,28 @@ namespace App\Services\Admin;
 use App\Models\Template;
 use Chumper\Zipper\Facades\Zipper;
 use Encore\Admin\Facades\Admin;
-use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Layout\Content;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TemplateService
 {
     /**
-     * 模板列表
-     */
-    public function index()
-    {
-        return Admin::content(function (Content $content) {
-            $content->header('模板');
-            $content->body($this->grid());
-        });
-    }
-
-    /**
      * 列表布局
      * @return Grid
      */
-    protected function grid()
+    public function grid()
     {
-        return Admin::grid(Template::class, function (Grid $grid) {
-            $grid->id('ID')->sortable();
-            $grid->name('模板名称');
-            $grid->description('模板描述');
-            $grid->file('模板文件地址');
-        });
-    }
+        $grid = new Grid(new Template);
+        $grid->id('ID')->sortable();
+        $grid->name('模板名称');
+        $grid->description('模板描述');
+        $grid->file('模板文件地址');
 
-    /**
-     * 新增界面
-     * @return Form
-     */
-    public function create()
-    {
-        return Admin::form(Template::class, function (Form $form) {
-            $form->text('name', '模板名称')->default('')->required();
-            $form->text('description', '模板描述')->default('');
-            $form->file('file', '模板文件')->required();
+        $grid->actions(function ($actions) {
+            $actions->disableEdit();
         });
+        return $grid;
     }
 
     /**
@@ -68,37 +48,100 @@ class TemplateService
      */
     protected function saveTemplateFile()
     {
+        // 上传文件临时路径
+        $temporaryPath = 'files/template_tmp/' . request('name');
+
+        //上传文件路径
+        $path = 'files/template/' . request('name');
+
         // 保存上传的压缩文件
-        $file = $this->makeCompressionFile();
+        $file = $this->makeCompressionFile($temporaryPath);
         //解压文件
-        $this->compressionFile($file);
-        return $file['path'];
+        $this->compressionFile($file, $path);
+        return 'uploads/' . $path;
     }
 
     /**
      * 保存上传的压缩文件
      * @return mixed
      */
-    protected function makeCompressionFile()
+    protected function makeCompressionFile(string $path)
     {
         $file = request()->file('file');
         // 文件后缀
         $originalExtension = $file->getClientOriginalExtension();
         //文件名
         $name = request('name') . '.' . $originalExtension;
-        $path = 'files/template/' . request('name');
         $fileName = request('file')->storeAs($path, $name, 'admin');
-        return ['path' => 'uploads/' . $path, 'file' => 'uploads/' . $fileName];
+        return $fileName;
     }
 
     /**
      * 解压文件
-     * @param array $file
+     * @param string $file
+     * @param string $path
      */
-    protected function compressionFile(array $file)
+    protected function compressionFile(string $file, string $path)
     {
-        $fileName = public_path($file['file']);
-        $path = public_path($file['path']);
-        Zipper::make($fileName)->extractTo($path);
+        $file = public_path('uploads/' . $file);
+        $path = public_path('uploads/' . $path);
+        Zipper::make($file)->extractTo($path);
+    }
+
+    public function showGrid(int $id)
+    {
+        $data = Template::findOrFail($id);
+        $files = $this->getAllTemplateFile($data->file);
+//        $grid = new Grid($data);
+        return Admin::grid($data,function( Grid $grid){
+            $grid->column('name','模板文件');
+        });
+//        if($files){
+//
+//        }else{
+//            $grid->column('','模板文件');
+//        }
+
+//        return $grid;
+    }
+
+    /**
+     * 编辑
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
+//    public function update(Request $request, $id)
+//    {
+//        $data = Template::findOrFail($id);
+//        if ($request->hasFile('file')) {
+//            //模板文件重新上传了
+//            $this->deleteFile($data->file);
+//            $path = $this->saveTemplateFile($request);
+//            $request->offsetSet('file', $path);
+//        }
+//        $data->update($request->input());
+//        return $data;
+//    }
+
+    /**
+     * 删除模板文件
+     * @param string $path
+     */
+    public function deleteFile(string $path)
+    {
+        $path = str_replace('uploads/', '', $path);
+        Storage::disk('admin')->deleteDirectory($path);
+    }
+    /**
+     * 获取模板文件
+     * @param string $path
+     * @return mixed
+     */
+    protected function getAllTemplateFile(string $path)
+    {
+        $path = str_replace('uploads/', '', $path);
+        $files = Storage::disk('admin')->files($path);
+        return $files;
     }
 }

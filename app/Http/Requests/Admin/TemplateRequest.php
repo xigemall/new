@@ -29,7 +29,7 @@ class TemplateRequest extends FormRequest
                 'required',
                 'string',
                 'max:50',
-                Rule::unique('templates')->ignore(request('template'))
+                Rule::unique('templates')->ignore(request('id'))
             ],
             'description' => [
                 'string',

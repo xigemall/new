@@ -4,7 +4,10 @@ namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\TemplateRequest;
+use App\Models\Template;
 use App\Services\Admin\TemplateService;
+use Encore\Admin\Form;
+use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
 
 class TemplateController extends Controller
@@ -21,10 +24,13 @@ class TemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Content $content)
     {
-        return $this->template->index();
+        $content->header('模板');
+        $content->body($this->template->grid());
+        return $content;
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -33,7 +39,11 @@ class TemplateController extends Controller
      */
     public function create()
     {
-        return $this->template->create();
+        $form = new Form(new Template());
+        $form->text('name', '模板名称')->default('')->required();
+        $form->text('description', '模板描述')->default('');
+        $form->file('file', '模板文件')->default('')->rules('mimes:zip')->required();
+        return $form;
     }
 
     /**
@@ -53,9 +63,11 @@ class TemplateController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,Content $content)
     {
-        //
+        $content->header('模板编辑');
+        $content->body($this->template->showGrid($id));
+        return $content;
     }
 
     /**
@@ -66,7 +78,11 @@ class TemplateController extends Controller
      */
     public function edit($id)
     {
-        //
+//        $form = new Form(Template::findOrFail($id));
+//        $form->text('name', '模板名称')->default($form->model()->name)->required();
+//        $form->text('description', '模板描述')->default($form->model()->description);
+//        $form->file('file', '模板文件')->default($form->model()->file)->rules('mimes:zip')->required();
+//        return $form;
     }
 
     /**
@@ -76,9 +92,9 @@ class TemplateController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TemplateRequest $request, $id)
     {
-        //
+//        $this->template->update($request,$id);
     }
 
     /**
@@ -89,6 +105,8 @@ class TemplateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Template::findOrFail($id);
+        $data->delete();
+        $this->template->deleteFile($data->file);
     }
 }
