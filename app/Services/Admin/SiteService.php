@@ -58,8 +58,9 @@ class SiteService
         return $data->load('template', 'navigations');
     }
 
+
     /**
-     * 生产文件名
+     * 生成logo、ico文件名
      * @return string
      */
     protected function getFileName()

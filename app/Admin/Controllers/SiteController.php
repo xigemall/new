@@ -27,9 +27,11 @@ class SiteController extends Controller
      */
     public function index(Content $content)
     {
-        $content->header('网站');
-        $content->body($this->site->grid());
-        return $content;
+//        $content->header('网站');
+//        $content->body($this->site->grid());
+//        return $content;
+        $data = Site::with(['navigations'])->get();
+        return response()->json($data, 200);
     }
 
     /**
@@ -57,7 +59,6 @@ class SiteController extends Controller
                 return $newData;
             })
             ->ajax('/admin/template');
-//        $form->
         return $form;
     }
 
@@ -81,7 +82,8 @@ class SiteController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Site::with(['navigations'])->findOrFail($id);
+        return response()->json($data, 200);
     }
 
     /**
@@ -102,9 +104,10 @@ class SiteController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SiteRequest $request, $id)
     {
-        //
+//        $data = $this->site->update($request,$id);
+//        return response()->json($data, 201);
     }
 
     /**
