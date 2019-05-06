@@ -44,10 +44,18 @@ class SiteService
     public function store($request)
     {
         DB::transaction(function () use ($request, &$data) {
+            //logo临时路径移入正式路径
+            $logoPath = $this->moveTmpLogoFile($request->input('logo'));
+            // ico临时路径移入正式路径
+            $icoPath = $this->moveTmpIcoFile($request->input('ico'));
+            $request->offsetSet('logo', $logoPath);
+            $request->offsetSet('ico', $icoPath);
+            //网站保存
             $data = Site::create($request->input());
+            //栏目保存
             $data->navigations()->createMany($request->input('navigations'));
         });
-        return $data;
+        return $data->load('template', 'navigations');
     }
 
     /**
