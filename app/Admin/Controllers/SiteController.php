@@ -69,7 +69,8 @@ class SiteController extends Controller
      */
     public function store(SiteRequest $request)
     {
-        $this->site->store($request);
+        $data = $this->site->store($request);
+        return response()->json($data, 201);
     }
 
     /**
