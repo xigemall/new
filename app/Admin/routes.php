@@ -5,11 +5,19 @@ use Illuminate\Routing\Router;
 Admin::registerAuthRoutes();
 
 Route::group([
-    'prefix'        => config('admin.route.prefix'),
-    'namespace'     => config('admin.route.namespace'),
+    'prefix' => config('admin.route.prefix'),
+    'namespace' => config('admin.route.namespace'),
     'middleware'    => config('admin.route.middleware'),
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index')->name('admin.home');
-    $router->resource('template','TemplateController');
+    // 模板
+    $router->resource('template', 'TemplateController');
+    // 网站
+    $router->resource('site', 'SiteController');
+    // 上传网站logo
+    $router->post('site-logo', 'SiteController@uploadSiteLogo');
+
+    //上传网站ICO
+    $router->post('site-ico', 'SiteController@uploadSiteIco');
 });
