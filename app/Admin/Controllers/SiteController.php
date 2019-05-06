@@ -106,8 +106,8 @@ class SiteController extends Controller
      */
     public function update(SiteRequest $request, $id)
     {
-//        $data = $this->site->update($request,$id);
-//        return response()->json($data, 201);
+        $data = $this->site->update($request,$id);
+        return response()->json($data, 201);
     }
 
     /**

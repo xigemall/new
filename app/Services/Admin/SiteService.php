@@ -58,6 +58,46 @@ class SiteService
         return $data->load('template', 'navigations');
     }
 
+    /**
+     * 修改网站
+     * @param $request
+     * @param $id
+     * @return mixed
+     */
+    public function update($request, $id)
+    {
+        $data = Site::findOrFail($id);
+        // 检查logo、ico是否变动
+        $request = $this->checkFile($request, $data);
+        DB::transaction(function () use ($request, &$data) {
+            $data->update($request->input());
+            $data->navigations()->delete();
+            $data->navigations()->createMany($request->input('navigations'));
+        });
+        return $data->load('template', 'navigations');
+    }
+
+    /**
+     *  修改时检查logo、ico是否有改动
+     * @param $request
+     * @param $data
+     * @return mixed
+     *
+     */
+    protected function checkFile($request, $data)
+    {
+        // logo 修改了
+        if ($request->input('logo') != $data->logo) {
+            $logoFile = $this->moveTmpLogoFile($request->input('logo'));
+            $request->offsetSet('logo', $logoFile);
+        }
+        // logo 修改了
+        if ($request->input('ico') != $data->ico) {
+            $logoFile = $this->moveTmpIcoFile($request->input('ico'));
+            $request->offsetSet('ico', $logoFile);
+        }
+        return $request;
+    }
 
     /**
      * 生成logo、ico文件名
