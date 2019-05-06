@@ -42,4 +42,14 @@ class Site extends Model
     {
         $this->hasMany(SiteNavigationArticle::class);
     }
+
+    public function getLogoAttribute($value)
+    {
+        return config('app.url') . '/' . $value;
+    }
+
+    public function getIcoAttribute($value)
+    {
+        return config('app.url') . '/' . $value;
+    }
 }
