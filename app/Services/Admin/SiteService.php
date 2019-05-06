@@ -36,6 +36,11 @@ class SiteService
         return $grid;
     }
 
+    /**
+     * 保存
+     * @param $request
+     * @return mixed
+     */
     public function store($request)
     {
         DB::transaction(function () use ($request, &$data) {
