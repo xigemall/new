@@ -10,6 +10,7 @@ use App\Services\Admin\SiteService;
 use Encore\Admin\Form;
 use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SiteController extends Controller
 {
@@ -106,7 +107,7 @@ class SiteController extends Controller
      */
     public function update(SiteRequest $request, $id)
     {
-        $data = $this->site->update($request,$id);
+        $data = $this->site->update($request, $id);
         return response()->json($data, 201);
     }
 
@@ -118,7 +119,13 @@ class SiteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Site::findOrFail($id);
+        DB::transaction(function () use ($data) {
+            $data->navigations()->delete();
+            $data->delete();
+        });
+
+        return response()->json('', 204);
     }
 
     /**
