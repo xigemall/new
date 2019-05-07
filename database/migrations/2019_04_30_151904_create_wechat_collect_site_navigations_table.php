@@ -18,6 +18,7 @@ class CreateWechatCollectSiteNavigationsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('site_id')->comment('网站ID')->index();
             $table->unsignedInteger('navigation_id')->comment('栏目ID')->index();
+            $table->unsignedInteger('wechat_id')->comment('微信ID')->index();
             $table->timestamps();
         });
     }
