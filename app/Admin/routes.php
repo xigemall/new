@@ -28,4 +28,7 @@ Route::group([
 
     // 微信
     $router->resource('wechat','WechatController');
+
+    // 友情
+    $router->resource('blogroll','BlogrollController');
 });
