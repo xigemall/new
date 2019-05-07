@@ -19,6 +19,8 @@ class TemplateService
      */
     public function grid()
     {
+        $data = Template::get();
+        return view('admin.template.index')->with(['data' => $data]);
         $grid = new Grid(new Template);
         $grid->id('ID')->sortable();
         $grid->name('模板名称');
@@ -93,8 +95,8 @@ class TemplateService
         $data = Template::findOrFail($id);
         $files = $this->getAllTemplateFile($data->file);
 //        $grid = new Grid($data);
-        return Admin::grid($data,function( Grid $grid){
-            $grid->column('name','模板文件');
+        return Admin::grid($data, function (Grid $grid) {
+            $grid->column('name', '模板文件');
         });
 //        if($files){
 //
@@ -133,6 +135,7 @@ class TemplateService
         $path = str_replace('uploads/', '', $path);
         Storage::disk('admin')->deleteDirectory($path);
     }
+
     /**
      * 获取模板文件
      * @param string $path

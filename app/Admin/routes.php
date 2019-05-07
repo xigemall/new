@@ -31,4 +31,7 @@ Route::group([
 
     // 友情
     $router->resource('blogroll','BlogrollController');
+
+    // 文章
+    $router->resource('article','ArticleController');
 });

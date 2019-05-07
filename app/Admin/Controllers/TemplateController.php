@@ -63,7 +63,7 @@ class TemplateController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id,Content $content)
+    public function show($id, Content $content)
     {
         $content->header('模板编辑');
         $content->body($this->template->showGrid($id));
