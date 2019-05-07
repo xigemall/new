@@ -18,7 +18,7 @@ class AdvertisingController extends Controller
      */
     public function index()
     {
-        $data = Advertising::with('AdvertisingSites')->get();
+        $data = Advertising::with('AdvertisingSites.site')->get();
         return response()->json($data, 200);
     }
 
@@ -43,7 +43,7 @@ class AdvertisingController extends Controller
         DB::transaction(function () use ($request, &$data) {
             // 移动广告图片地址
             $newImg = $this->moveImgFile($request->input('img'));
-            $request->offsetSet('img',$newImg);
+            $request->offsetSet('img', $newImg);
 
             $data = Advertising::create($request->input());
             if ($request->input('site')) {
@@ -79,7 +79,8 @@ class AdvertisingController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Advertising::with('AdvertisingSites.site')->findOrFail($id);
+        return response()->json($data, 200);
     }
 
     /**
@@ -100,9 +101,32 @@ class AdvertisingController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdvertisingRequest $request, $id)
     {
-        //
+        $data = Advertising::findOrFail($id);
+        $request = $this->checkImg($request, $data);
+        DB::transaction(function () use ($request, &$data) {
+            $data->update($request->input());
+            $data->AdvertisingSites()->delete();
+            if ($request->input('site')) {
+                $site = array_map(function ($v) {
+                    return ['site_id' => $v];
+                }, $request->input('site'));
+                $data->AdvertisingSites()->createMany($site);
+            }
+        });
+        return response()->json($data->load('AdvertisingSites'), 201);
+    }
+
+    protected function checkImg($request, $data)
+    {
+        if ($request->input('img') != $data->img) {
+            $oldFile = str_replace('uploads/', '', $request->input('img'));
+            $newFile = str_replace('/tmp', '', $oldFile);
+            Storage::disk('admin')->move($oldFile, $newFile);
+            $request->offsetSet('img', 'uploads/' . $newFile);
+        }
+        return $request;
     }
 
     /**
@@ -113,7 +137,10 @@ class AdvertisingController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $data =  Advertising::findOrFail($id);
+       $data->AdvertisingSites()->delete();
+       $data->delete();
+       return response()->json('',204);
     }
 
     /**
