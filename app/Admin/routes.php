@@ -25,4 +25,7 @@ Route::group([
     //广告
     $router->resource('advertising','AdvertisingController');
     $router->post('advertising-img','AdvertisingController@uploadAdvertisingImg');
+
+    // 微信
+    $router->resource('wechat','WechatController');
 });
