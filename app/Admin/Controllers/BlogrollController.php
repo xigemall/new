@@ -59,7 +59,8 @@ class BlogrollController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Blogroll::with('blogrollSites')->findOrFail($id);
+        return response()->json($data, 200);
     }
 
     /**
@@ -80,9 +81,20 @@ class BlogrollController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BlogrollRequest $request, $id)
     {
-        //
+        $data = Blogroll::findOrFail($id);
+        DB::transaction(function () use ($request, &$data) {
+            $data->update($request->input());
+            $data->blogrollSites()->delete();
+            if ($request->input('site')) {
+                $site = array_map(function ($v) {
+                    return ['site_id' => $v];
+                }, $request->input('site'));
+                $data->blogrollSites()->createMany($site);
+            }
+        });
+        return response()->json($data->load('blogrollSites'), 201);
     }
 
     /**
@@ -93,6 +105,9 @@ class BlogrollController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Blogroll::findOrFail($id);
+        $data->blogrollSites()->delete();
+        $data->delete();
+        return response()->json('', 204);
     }
 }
