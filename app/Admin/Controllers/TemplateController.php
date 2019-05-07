@@ -105,6 +105,7 @@ class TemplateController extends Controller
      */
     public function destroy($id)
     {
+        return response()->json('',204);
         $data = Template::findOrFail($id);
         $data->delete();
         $this->template->deleteFile($data->file);
