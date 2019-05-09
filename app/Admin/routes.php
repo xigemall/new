@@ -18,11 +18,12 @@ Route::group([
     $router->get('template-detail/{id}','TemplateDetailController@index');
 
     // 网站
-    $router->resource('site', 'SiteController');
-    // 上传网站logo
-    $router->post('site-logo', 'SiteController@uploadSiteLogo');
-    //上传网站ICO
-    $router->post('site-ico', 'SiteController@uploadSiteIco');
+    $router->post('site/{id}', 'SiteController@update');
+    $router->resource('site', 'SiteController',[
+        'except'=>[
+            'update'
+        ]
+    ]);
 
     //广告
     $router->resource('advertising','AdvertisingController');

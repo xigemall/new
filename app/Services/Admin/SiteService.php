@@ -79,7 +79,13 @@ class SiteService
         DB::transaction(function () use ($request, &$data) {
             $data->update($request->input());
             $data->navigations()->delete();
-            $data->navigations()->createMany($request->input('navigations'));
+            if ($request->input('navigations')) {
+                $navigations = explode(',', $request->input('navigations'));
+                $navigationsArray = array_map(function ($v) {
+                    return ['name' => $v];
+                }, $navigations);
+                $data->navigations()->createMany($navigationsArray);
+            }
         });
         return $data->load('template', 'navigations');
     }
@@ -94,13 +100,13 @@ class SiteService
     protected function checkFile($request, $data)
     {
         // logo 修改了
-        if ($request->input('logo') != $data->logo) {
-            $logoFile = $this->moveTmpLogoFile($request->input('logo'));
+        if ($request->hasFile('logo') && $request->input('logo') != $data->logo) {
+            $logoFile = $this->uploadSiteLogo();
             $request->offsetSet('logo', $logoFile);
         }
         // logo 修改了
-        if ($request->input('ico') != $data->ico) {
-            $logoFile = $this->moveTmpIcoFile($request->input('ico'));
+        if ($request->hasFile('ico') && $request->input('ico') != $data->ico) {
+            $logoFile = $this->uploadSiteIco();
             $request->offsetSet('ico', $logoFile);
         }
         return $request;

@@ -52,11 +52,10 @@ class SiteController extends Controller
         $form->select('template_id', '模板选择')
             ->options(function () {
                 $data = Template::select('id', 'name')->get();
-                $newData = $data->map(function ($value, $key) {
-                    return [$value['id'] => $value['name']];
+                $newData = [];
+                $data->map(function ($value, $key) use (&$newData) {
+                    $newData[$value->id] = $value->name;
                 })->all();
-//                array_unshift($newData, [0 => '随机']);
-                $newData = array_collapse($newData);
                 return $newData;
             })
             ->ajax('/admin/template');
@@ -85,8 +84,8 @@ class SiteController extends Controller
      */
     public function show($id)
     {
-        $data = Site::with(['navigations'])->findOrFail($id);
-        return response()->json($data, 200);
+//        $data = Site::with(['navigations'])->findOrFail($id);
+//        return response()->json($data, 200);
     }
 
     /**
@@ -97,7 +96,29 @@ class SiteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $form = new Form(Site::findOrFail($id));
+        $form->text('title', '网站标题')->default($form->model()->title);
+        $form->text('description', '网站描述')->default($form->model()->description);
+        $form->text('keyword', '网站关键字')->default($form->model()->keyword);
+        $form->text('domain', '网站域名')->default($form->model()->domain);
+        $form->image('logo', '网站LOGO图片')->default($form->model()->logo);
+        $form->image('ico', '网站ICO')->default($form->model()->ico);
+        $form->select('template_id', '模板选择')
+            ->options(function () {
+                $data = Template::select('id', 'name')->get();
+                $newData = [];
+                $data->map(function ($value, $key) use (&$newData) {
+                    $newData[$value->id] = $value->name;
+                })->all();
+                return $newData;
+            })
+            ->ajax('/admin/template')
+        ->default($form->model()->template_id);
+        // 关联栏目
+        $navigations = implode(',',$form->model()->navigations()->pluck('name')->all());
+        $form->text('navigations', '网站栏目')->required()->default($navigations);
+
+        return $form;
     }
 
     /**
@@ -109,8 +130,8 @@ class SiteController extends Controller
      */
     public function update(SiteRequest $request, $id)
     {
-        $data = $this->site->update($request, $id);
-        return response()->json($data, 201);
+        $this->site->update($request, $id);
+        return redirect('/admin/site');
     }
 
     /**
@@ -128,49 +149,5 @@ class SiteController extends Controller
         });
 
         return response()->json('', 204);
-    }
-
-    /**
-     * 上传网站LOGO
-     * @param Request $request
-     * @return string
-     */
-    public function uploadSiteLogo(Request $request)
-    {
-        $message = [
-            'logo' => '网站LOGO图片',
-        ];
-        $this->validate($request,
-            [
-                'logo' => [
-                    'required',
-                    'file',
-                    'image'
-                ]
-            ], [], $message);
-        $fileName = $this->site->uploadSiteLogo();
-        return $fileName;
-    }
-
-    /**
-     * 上传网站ICO
-     * @param Request $request
-     * @return string
-     */
-    public function uploadSiteIco(Request $request)
-    {
-        $message = [
-            'ico' => '网站ICO',
-        ];
-        $this->validate($request,
-            [
-                'ico' => [
-                    'required',
-                    'file',
-                    'image'
-                ]
-            ], [], $message);
-        $fileName = $this->site->uploadSiteIco();
-        return $fileName;
     }
 }
