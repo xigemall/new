@@ -24,6 +24,8 @@ Route::group([
             'update'
         ]
     ]);
+    //获取网站栏目
+    $router->get('site-navigation/{id}', 'SiteController@getSiteNavigation');
 
     //广告
     $router->post('advertising/{id}','AdvertisingController@update');

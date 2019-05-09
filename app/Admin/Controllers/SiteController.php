@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SiteRequest;
+use App\Models\Navigation;
 use App\Models\Site;
 use App\Models\Template;
 use App\Services\Admin\SiteService;
@@ -149,5 +150,16 @@ class SiteController extends Controller
         });
 
         return response()->json('', 204);
+    }
+
+    /**
+     * 获取网站栏目
+     * @param $siteId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSiteNavigation($siteId)
+    {
+        $data = Navigation::where('site_id',$siteId)->get();
+        return response()->json($data,200);
     }
 }

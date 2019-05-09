@@ -5,6 +5,7 @@ namespace App\Admin\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\WechatRequest;
 use App\Models\Advertising;
+use App\Models\Navigation;
 use App\Models\Site;
 use App\Models\Wechat;
 use Encore\Admin\Form;
@@ -51,20 +52,18 @@ class WechatController extends Controller
         $form = new Form(new Wechat());
         $form->text('name', '名称')->default('')->required();
         $form->text('wechat_num', '公众号')->default('')->required();
-
-
-        $form->image('img', '广告图片')->default('');
-        $form->url('link', '链接')->default('')->required();
-
-        $form->select('place', '位置')->options([0 => '全局', 1 => '其它网站']);
-
+        $form->select('site', '网站')
+            ->options(function () {
+                $data = Site::select('id', 'title')->get();
+                $newData = [];
+                $data->map(function ($value, $key) use (&$newData) {
+                    $newData[$value->id] = $value->title;
+                })->all();
+                return $newData;
+            })->load('navigation','/admin/navigation');
+        $form->select('navigation');
         $data = Site::select('id', 'title')->get();
-        $options = [];
-        $data->map(function ($value, $key) use (&$options) {
-            $options[$value->id] = $value->title;
-        })->all();
-
-        $form->checkbox('site', '网站')->options($options)->stacked();
+        $form->html(view('add',['data'=>$data]));
 
         return $form;
     }
