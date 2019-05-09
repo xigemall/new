@@ -42,12 +42,12 @@ class SiteRequest extends FormRequest
                 'max:100',
             ],
             'logo' => [
-                'string',
-                'max:255'
+                'file',
+                'image'
             ],
             'ico' => [
-                'string',
-                'max:255'
+                'file',
+                'file'
             ],
             'template_id' => [
                 'integer',
@@ -55,18 +55,9 @@ class SiteRequest extends FormRequest
                 'nullable',
             ],
             'navigations' => [
-                'array',
+                'string',
                 'required'
-            ],
-            'navigations.*.name' => [
-                'required',
-                'max:50',
-                'string'
-            ],
-            'navigations.*.description' => [
-                'max:255',
-                'string'
-            ],
+            ]
         ];
     }
 
@@ -80,8 +71,7 @@ class SiteRequest extends FormRequest
             'logo' => '网站LOGO图片',
             'ico' => '网站ICO',
             'template_id' => '模板选择',
-            'navigations.*.name' => '栏目名称',
-            'navigations.*.description' => '栏目描述',
+            'navigations' => '网站栏目',
         ];
     }
 }

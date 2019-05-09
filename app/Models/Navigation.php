@@ -8,7 +8,6 @@ class Navigation extends Model
 {
     protected $fillable = [
         'name',
-        'description',
         'site_id',
     ];
 }
