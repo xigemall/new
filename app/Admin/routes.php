@@ -33,7 +33,10 @@ Route::group([
     $router->resource('wechat','WechatController');
 
     // 友情
-    $router->resource('blogroll','BlogrollController');
+    $router->post('blogroll/{id}','BlogrollController@update');
+    $router->resource('blogroll','BlogrollController',[
+        'except'=>['update']
+    ]);
 
     // 文章
     $router->resource('article','ArticleController');

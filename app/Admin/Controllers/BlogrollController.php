@@ -110,9 +110,11 @@ class BlogrollController extends Controller
     {
         $form = new Form(Blogroll::findOrFail($id));
         $form->text('title', '标题')->default($form->model()->title)->required();
-        $form->url('link', '链接地址')->default($this->model()->link);
+        $form->url('link', '链接地址')->default($form->model()->link);
 
-        $form->select('place', '位置')->options([0 => '全局', 1 => '其它网站'])->default($form->model()->place);
+        $form->select('place', '位置')
+            ->options([0 => '全局', 1 => '其它网站'])
+            ->default($form->model()->place);
 
         $data = Site::select('id', 'title')->get();
         $options = [];
@@ -120,10 +122,10 @@ class BlogrollController extends Controller
             $options[$value->id] = $value->title;
         })->all();
 
-//        $form->checkbox('site', '网站')
-//            ->options($options)
-//            ->default($form->model()->blogrollSites()->pluck('site_id')->all())
-//            ->stacked();
+        $form->checkbox('site', '网站')
+            ->options($options)
+            ->default($form->model()->blogrollSites()->pluck('site_id')->all())
+            ->stacked();
 
         return $form;
     }
@@ -138,17 +140,19 @@ class BlogrollController extends Controller
     public function update(BlogrollRequest $request, $id)
     {
         $data = Blogroll::findOrFail($id);
+        $request->offsetSet('site', array_filter($request->input('site')));
         DB::transaction(function () use ($request, &$data) {
             $data->update($request->input());
             $data->blogrollSites()->delete();
-            if ($request->input('site')) {
+            if ($request->input('place') && $request->input('site')) {
                 $site = array_map(function ($v) {
                     return ['site_id' => $v];
                 }, $request->input('site'));
                 $data->blogrollSites()->createMany($site);
             }
         });
-        return response()->json($data->load('blogrollSites'), 201);
+        return redirect('/admin/blogroll');
+//        return response()->json($data->load('blogrollSites'), 201);
     }
 
     /**
