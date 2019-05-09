@@ -37,13 +37,17 @@ class TemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Content $content)
     {
         $form = new Form(new Template());
         $form->text('name', '模板名称')->default('')->required();
         $form->text('description', '模板描述')->default('');
         $form->file('file', '模板文件')->default('')->rules('mimes:zip')->required();
         return $form;
+//        $content->header('模板');
+//        $content->body(view('admin.template.add'));
+//        return $content;
+
     }
 
     /**

@@ -19,18 +19,21 @@ class TemplateService
      */
     public function grid()
     {
-        $data = Template::get();
-        return view('admin.template.index')->with(['data' => $data]);
-//        $grid = new Grid(new Template);
-//        $grid->id('ID')->sortable();
-//        $grid->name('模板名称');
-//        $grid->description('模板描述');
-//        $grid->file('模板文件地址');
-//
-//        $grid->actions(function ($actions) {
-//            $actions->disableEdit();
-//        });
-//        return $grid;
+//        $data = Template::get();
+//        return view('admin.template.index')->with(['data' => $data]);
+        $grid = new Grid(new Template);
+        $grid->id('ID')->sortable();
+        $grid->name('模板名称');
+        $grid->description('模板描述');
+        $grid->file('模板文件地址');
+
+        $grid->actions(function ($actions) {
+            $actions->append("<a href=\"/admin/template-detail/".$actions->getKey()."\">详情</a>");
+            $actions->disableView();
+            $actions->disableEdit();
+
+        });
+        return $grid;
     }
 
     /**
@@ -141,7 +144,7 @@ class TemplateService
      * @param string $path
      * @return mixed
      */
-    protected function getAllTemplateFile(string $path)
+    public function getAllTemplateFile(string $path)
     {
         $path = str_replace('uploads/', '', $path);
         $files = Storage::disk('admin')->files($path);

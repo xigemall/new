@@ -14,6 +14,8 @@ Route::group([
 
     // 模板
     $router->resource('template', 'TemplateController');
+    //模板详情列表
+    $router->get('template-detail/{id}','TemplateDetailController@index');
 
     // 网站
     $router->resource('site', 'SiteController');
