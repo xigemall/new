@@ -4,7 +4,12 @@ namespace App\Admin\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\WechatRequest;
+use App\Models\Advertising;
+use App\Models\Site;
 use App\Models\Wechat;
+use Encore\Admin\Form;
+use Encore\Admin\Grid;
+use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,10 +20,25 @@ class WechatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Content $content)
     {
-        $data = Wechat::get();
-        return response()->json($data, 200);
+        $content->header('网站');
+        $content->body($this->getGridList());
+        return $content;
+//        $data = Wechat::get();
+//        return response()->json($data, 200);
+    }
+
+    protected function getGridList()
+    {
+        $grid = new Grid(new Wechat());
+        $grid->name('名称');
+        $grid->wechat_num('公众号');
+        $grid->collect_num('采集数量');
+        $grid->actions(function ($actions) {
+            $actions->disableView();
+        });
+        return $grid;
     }
 
     /**
@@ -28,7 +48,25 @@ class WechatController extends Controller
      */
     public function create()
     {
-        //
+        $form = new Form(new Wechat());
+        $form->text('name', '名称')->default('')->required();
+        $form->text('wechat_num', '公众号')->default('')->required();
+
+
+        $form->image('img', '广告图片')->default('');
+        $form->url('link', '链接')->default('')->required();
+
+        $form->select('place', '位置')->options([0 => '全局', 1 => '其它网站']);
+
+        $data = Site::select('id', 'title')->get();
+        $options = [];
+        $data->map(function ($value, $key) use (&$options) {
+            $options[$value->id] = $value->title;
+        })->all();
+
+        $form->checkbox('site', '网站')->options($options)->stacked();
+
+        return $form;
     }
 
     /**
