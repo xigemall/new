@@ -119,21 +119,23 @@
                 function (index) {
                     //发异步删除数据
                     $.ajax({
-                        type:'delete',
-                        url:'/admin/template/'+id,
-                        dataType:'json',
-                        headers:{
-
+                        type: 'delete',
+                        url: '/admin/template/' + id,
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        success:function($data){
-                            console.log(data);
+                        success: function (data) {
+                            if (data === 1) {
+                                $(obj).parents("tr").remove();
+                                layer.msg('已删除!', {
+                                    icon: 1,
+                                    time: 1000
+                                });
+                            }
                         }
                     })
-                    // $(obj).parents("tr").remove();
-                    // layer.msg('已删除!', {
-                    //     icon: 1,
-                    //     time: 1000
-                    // });
+
                 });
         }
 
