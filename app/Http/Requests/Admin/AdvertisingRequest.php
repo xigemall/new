@@ -28,25 +28,23 @@ class AdvertisingRequest extends FormRequest
             'title' => [
                 'required',
                 'max:100',
-                'string',
             ],
             'img' => [
-                'string',
-                'max:255',
+                'file',
+                'image',
             ],
             'link' => [
-                'string',
                 'max:255',
                 'url',
+                'string',
+                'required',
             ],
             'place' => [
+                'required',
                 Rule::in([0, 1])
             ],
             'site' => [
                 'array',
-            ],
-            'site.*' => [
-                Rule::exists('sites', 'id')
             ]
         ];
     }
@@ -59,7 +57,6 @@ class AdvertisingRequest extends FormRequest
             'link' => '链接',
             'place' => '位置',
             'site' => '网站',
-            'site.*' => '网站ID',
         ];
     }
 }
