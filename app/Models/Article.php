@@ -11,6 +11,7 @@ class Article extends Model
         'wechat_num',
         'wechat_article_id',
         'title',
+        'view_count',
         'content',
         'html',
         'image_urls',

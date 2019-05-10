@@ -53,6 +53,7 @@ class Article extends Command
                 $article->wechat_num = $wechatNum;
                 $article->wechat_article_id = $v['id'];
                 $article->title = $v['title'];
+                $article->view_count = $v['viewCount'];
                 $article->content = $v['content'];
                 $article->html = $v['html'];
                 $article->image_urls = $v['imageUrls'];

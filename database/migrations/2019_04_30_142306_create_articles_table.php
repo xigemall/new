@@ -20,6 +20,7 @@ class CreateArticlesTable extends Migration
             $table->string('wechat_num')->comment('微信公众号')->default('')->nullable()->index();
             $table->string('wechat_article_id')->comment('文章ID')->index()->default('');
             $table->string('title')->comment('文章标题')->default('')->nullable();
+            $table->unsignedInteger('view_count')->comment('观看数')->default(0)->nullable();
             $table->longText('content')->comment('文章正文')->nullable();
             $table->longText('html')->comment('content对应的html代码')->nullable();
             $table->text('image_urls')->comment('内容图片链接列表')->nullable();
