@@ -25,4 +25,9 @@ class Article extends Model
         'audio_urls' => 'array',
         'video_urls' => 'array',
     ];
+
+    public function siteNavigationArticle()
+    {
+        return $this->hasOne(SiteNavigationArticle::class);
+    }
 }
