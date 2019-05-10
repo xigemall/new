@@ -14,8 +14,13 @@ Route::group([
 
     // 模板
     $router->resource('template', 'TemplateController');
+
     //模板详情列表
     $router->get('template-detail/{id}','TemplateDetailController@index');
+    $router->get('template-detail/{id}/create','TemplateDetailController@create');
+    $router->post('template-detail/{id}','TemplateDetailController@store');
+    $router->get('template-detail/{id}/edit','TemplateDetailController@edit');
+    $router->post('template-detail-delete','TemplateDetailController@delete');
 
     // 网站
     $router->post('site/{id}', 'SiteController@update');
