@@ -20,6 +20,6 @@ trait SiteLogo
         $extension = $file->getClientOriginalExtension();
         $newName = $name . '.' . $extension;
         $fileName = $file->storeAs($path, $newName, 'admin');
-        return 'uploads/' . $fileName;
+        return '/uploads/' . $fileName;
     }
 }
