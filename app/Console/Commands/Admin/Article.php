@@ -11,7 +11,7 @@ class Article extends Command
      *
      * @var string
      */
-    protected $signature = 'article:create';
+    protected $signature = 'article:create {id} {wechat_num}';
 
     /**
      * The console command description.
@@ -37,6 +37,9 @@ class Article extends Command
      */
     public function handle()
     {
+        $id = $this->argument('id');
+        $wechatNum = $this->argument('wechat_num');
+
 
     }
 }
