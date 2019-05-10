@@ -24,7 +24,7 @@ class WechatController extends Controller
      */
     public function index(Content $content)
     {
-        $content->header('网站');
+        $content->header('微信管理');
         $content->body($this->getGridList());
         return $content;
 //        $data = Wechat::get();
