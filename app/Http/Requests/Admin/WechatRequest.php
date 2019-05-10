@@ -29,16 +29,20 @@ class WechatRequest extends FormRequest
                 'string',
                 'max:50',
                 'required',
-                Rule::unique('wechats')->ignore(request()->route('wechat'))
+                Rule::unique('wechats')->ignore(request()->route('id'))
             ],
             'wechat_num' => [
                 'string',
                 'max:255',
                 'required',
             ],
-            'site' => [
-                'array',
-                'required'
+            'site_id' => [
+                'required',
+                Rule::exists('sites', 'id')
+            ],
+            'navigation_id' => [
+                'required',
+                Rule::exists('navigations', 'id')->where('site_id', $this->site_id)
             ]
         ];
     }
@@ -48,7 +52,8 @@ class WechatRequest extends FormRequest
         return [
             'name' => '名称',
             'wechat_num' => '公众号',
-            'site' => '网站',
+            'site_id' => '网站',
+            'navigation_id' => '栏目',
         ];
     }
 }

@@ -5,8 +5,8 @@
         <div class="col-sm-8">
             <select class="form-control site" style="width: 100%;" name="site_id" data-value="" id="site"
                     onchange="change(this.value)">
-                @foreach($data as $v)
-                    <option value="{{$v->id}}">{{$v->title}}</option>
+                @foreach($site as $v)
+                    <option value="{{$v->id}}"  @if($v->id == $data->wechatCollectSiteNavigations->site_id) selected @endif>{{$v->title}}</option>
                 @endforeach
             </select>
         </div>
@@ -37,9 +37,11 @@
                 'X-CSRF-TOKEN': "{{csrf_token()}}"
             },
             success: function (data) {
+                var navigationId = "{{$data->wechatCollectSiteNavigations->navigation_id}}";
                 var html = '';
                 $.each(data, function (k, v) {
-                    html += '<option value="' + v.id + '">' + v.name + '</option>'
+                    var selected = (v.id == navigationId)? 'selected': '';
+                    html += '<option '+selected+' value="' + v.id + '">' + v.name + '</option>'
                 });
                 $('.navigation').html(html);
             }

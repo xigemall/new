@@ -14,6 +14,6 @@ class Wechat extends Model
 
     public function wechatCollectSiteNavigations()
     {
-        return $this->hasMany(WechatCollectSiteNavigation::class);
+        return $this->hasOne(WechatCollectSiteNavigation::class);
     }
 }

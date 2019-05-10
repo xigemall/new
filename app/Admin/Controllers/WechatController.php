@@ -8,6 +8,7 @@ use App\Models\Advertising;
 use App\Models\Navigation;
 use App\Models\Site;
 use App\Models\Wechat;
+use App\Models\WechatCollectSiteNavigation;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
@@ -52,19 +53,8 @@ class WechatController extends Controller
         $form = new Form(new Wechat());
         $form->text('name', '名称')->default('')->required();
         $form->text('wechat_num', '公众号')->default('')->required();
-        $form->select('site', '网站')
-            ->options(function () {
-                $data = Site::select('id', 'title')->get();
-                $newData = [];
-                $data->map(function ($value, $key) use (&$newData) {
-                    $newData[$value->id] = $value->title;
-                })->all();
-                return $newData;
-            })->load('navigation','/admin/navigation');
-        $form->select('navigation');
         $data = Site::select('id', 'title')->get();
-        $form->html(view('add',['data'=>$data]));
-
+        $form->html(view('add', ['data' => $data]));
         return $form;
     }
 
@@ -74,28 +64,16 @@ class WechatController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(WechatRequest $request)
+    public function store(Request $request)
     {
         DB::transaction(function () use ($request, &$data) {
             $data = Wechat::create($request->input());
-            $site = $this->getRequestSite($request->input('site'));
-            $data->wechatCollectSiteNavigations()->createMany($site);
+            $data->wechatCollectSiteNavigations()->create($request->input());
         });
-        $newData = $data->load('wechatCollectSiteNavigations');
-        return response()->json($newData,201);
+//        $newData = $data->load('wechatCollectSiteNavigations');
+//        return response()->json($newData,201);
     }
 
-    protected function getRequestSite(array $site)
-    {
-        $data = [];
-        foreach($site as $k=>$v){
-            foreach ($v['navigation_id'] as $key=>$value){
-                $item = ['site_id'=>$v['site_id'],'navigation_id'=>$value];
-                array_push($data,$item);
-            }
-        }
-        return $data;
-    }
 
     /**
      * Display the specified resource.
@@ -106,7 +84,7 @@ class WechatController extends Controller
     public function show($id)
     {
         $data = Wechat::with('wechatCollectSiteNavigations')->findOrFail($id);
-        return response()->json($data,200);
+        return response()->json($data, 200);
     }
 
     /**
@@ -117,7 +95,12 @@ class WechatController extends Controller
      */
     public function edit($id)
     {
-        //
+        $form = new Form(Wechat::findOrFail($id));
+        $form->text('name', '名称')->default($form->model()->name)->required();
+        $form->text('wechat_num', '公众号')->default($form->model()->wechat_num)->required();
+        $data = Site::select('id', 'title')->get();
+        $form->html(view('edit', ['data' => $form->model(), 'site' => $data]));
+        return $form;
     }
 
     /**
@@ -132,12 +115,13 @@ class WechatController extends Controller
         $data = Wechat::findOrFail($id);
         DB::transaction(function () use ($request, &$data) {
             $data->update($request->input());
-            $site = $this->getRequestSite($request->input('site'));
-            $data->wechatCollectSiteNavigations()->delete();
-            $data->wechatCollectSiteNavigations()->createMany($site);
+            $data->wechatCollectSiteNavigations->site_id = $request->input('site_id');
+            $data->wechatCollectSiteNavigations->navigation_id = $request->input('navigation_id');
+            $data->wechatCollectSiteNavigations->save();
         });
-        $newData = $data->load('wechatCollectSiteNavigations');
-        return response()->json($newData,201);
+//        $newData = $data->load('wechatCollectSiteNavigations');
+//        return response()->json($newData, 201);
+        redirect('/admin/wechat');
     }
 
     /**
@@ -149,7 +133,8 @@ class WechatController extends Controller
     public function destroy($id)
     {
         $data = Wechat::findOrFail($id);
+        $data->wechatCollectSiteNavigations()->delete();
         $data->delete();
-        return response()->json('',204);
+        return response()->json('', 204);
     }
 }

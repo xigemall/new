@@ -32,7 +32,10 @@ Route::group([
     $router->resource('advertising','AdvertisingController');
 
     // 微信
-    $router->resource('wechat','WechatController');
+    $router->post('wechat/{id}','WechatController@update');
+    $router->resource('wechat','WechatController',[
+        'except'=>['update']
+    ]);
 
     // 友情
     $router->post('blogroll/{id}','BlogrollController@update');
