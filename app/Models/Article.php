@@ -7,22 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     protected $fillable = [
-      'name',
-      'account',
-      'type',
-      'author',
-      'image_url',
-      'original_url',
-      'audio_url',
-      'update_time',
-      'title',
-      'summary',
-      'public_time',
-      'info_url',
-      'is_original',
-      'read_num',
-      'like_num',
-      'content',
-      'keywords',
+        'name',
+        'wechat_num',
+        'wechat_article_id',
+        'title',
+        'content',
+        'html',
+        'image_urls',
+        'audio_urls',
+        'video_urls',
+        'comments',
+    ];
+
+    protected $casts = [
+        'image_urls' => 'array',
+        'audio_urls' => 'array',
+        'video_urls' => 'array',
     ];
 }
