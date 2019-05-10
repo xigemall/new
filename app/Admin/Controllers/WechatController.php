@@ -54,7 +54,7 @@ class WechatController extends Controller
         $form->text('name', '名称')->default('')->required();
         $form->text('wechat_num', '公众号')->default('')->required();
         $data = Site::select('id', 'title')->get();
-        $form->html(view('add', ['data' => $data]));
+        $form->html(view('admin.wechat.add', ['data' => $data]));
         return $form;
     }
 
@@ -99,7 +99,7 @@ class WechatController extends Controller
         $form->text('name', '名称')->default($form->model()->name)->required();
         $form->text('wechat_num', '公众号')->default($form->model()->wechat_num)->required();
         $data = Site::select('id', 'title')->get();
-        $form->html(view('edit', ['data' => $form->model(), 'site' => $data]));
+        $form->html(view('admin.wechat.edit', ['data' => $form->model(), 'site' => $data]));
         return $form;
     }
 
