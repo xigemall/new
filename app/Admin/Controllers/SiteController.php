@@ -102,7 +102,16 @@ class SiteController extends Controller
         $form->text('description', '网站描述')->default($form->model()->description);
         $form->text('keyword', '网站关键字')->default($form->model()->keyword);
         $form->text('domain', '网站域名')->default($form->model()->domain);
+
+        $form->hidden('logo1')->default($form->model()->logo);
+        $form->display('logo', '网站LOGO图片')->with(function ($value) use ($form) {
+            return "<img src=" . $form->model()->logo . " />";
+        });
         $form->image('logo', '网站LOGO图片')->default($form->model()->logo);
+        $form->hidden('ico1')->default($form->model()->ico);
+        $form->display('ico', '网站ICO')->with(function ($value) use ($form) {
+            return "<img src=" . $form->model()->ico . " />";
+        });
         $form->image('ico', '网站ICO')->default($form->model()->ico);
         $form->select('template_id', '模板选择')
             ->options(function () {
@@ -114,9 +123,9 @@ class SiteController extends Controller
                 return $newData;
             })
             ->ajax('/admin/template')
-        ->default($form->model()->template_id);
+            ->default($form->model()->template_id);
         // 关联栏目
-        $navigations = implode(',',$form->model()->navigations()->pluck('name')->all());
+        $navigations = implode(',', $form->model()->navigations()->pluck('name')->all());
         $form->text('navigations', '网站栏目')->required()->default($navigations);
 
         return $form;
@@ -159,7 +168,7 @@ class SiteController extends Controller
      */
     public function getSiteNavigation($siteId)
     {
-        $data = Navigation::where('site_id',$siteId)->get();
-        return response()->json($data,200);
+        $data = Navigation::where('site_id', $siteId)->get();
+        return response()->json($data, 200);
     }
 }

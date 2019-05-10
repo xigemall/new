@@ -75,7 +75,7 @@ class SiteService
     {
         $data = Site::findOrFail($id);
         // 检查logo、ico是否变动
-        $request = $this->checkFile($request, $data);
+        $request = $this->checkFile($request);
         DB::transaction(function () use ($request, &$data) {
             $data->update($request->input());
             $data->navigations()->delete();
@@ -97,17 +97,21 @@ class SiteService
      * @return mixed
      *
      */
-    protected function checkFile($request, $data)
+    protected function checkFile($request)
     {
         // logo 修改了
-        if ($request->hasFile('logo') && $request->input('logo') != $data->logo) {
+        if ($request->hasFile('logo')) {
             $logoFile = $this->uploadSiteLogo();
             $request->offsetSet('logo', $logoFile);
+        } else {
+            $request->offsetSet('logo', $request->input('logo1'));
         }
         // logo 修改了
-        if ($request->hasFile('ico') && $request->input('ico') != $data->ico) {
+        if ($request->hasFile('ico')) {
             $logoFile = $this->uploadSiteIco();
             $request->offsetSet('ico', $logoFile);
+        } else {
+            $request->offsetSet('ico', $request->input('ico1'));
         }
         return $request;
     }
