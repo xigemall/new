@@ -19,8 +19,6 @@ class TemplateService
      */
     public function grid()
     {
-//        $data = Template::get();
-//        return view('admin.template.index')->with(['data' => $data]);
         $grid = new Grid(new Template);
         $grid->id('ID')->sortable();
         $grid->name('模板名称');

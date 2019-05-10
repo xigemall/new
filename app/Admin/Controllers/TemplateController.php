@@ -69,9 +69,9 @@ class TemplateController extends Controller
      */
     public function show($id, Content $content)
     {
-        $content->header('模板编辑');
-        $content->body($this->template->showGrid($id));
-        return $content;
+//        $content->header('模板编辑');
+//        $content->body($this->template->showGrid($id));
+//        return $content;
     }
 
     /**
