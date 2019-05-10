@@ -18,7 +18,7 @@ class ArticleService
 
     public function get()
     {
-        $this->showApi->getShowApiArticle('111');
+
     }
 
     public function getWechatNum()
