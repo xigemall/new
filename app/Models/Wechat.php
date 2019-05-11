@@ -10,7 +10,6 @@ class Wechat extends Model
         'name',
         'wechat_num',
         'collect_num',
-        'page_token',
     ];
 
     public function wechatCollectSiteNavigations()
