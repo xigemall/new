@@ -27,19 +27,23 @@ class SiteRequest extends FormRequest
         return [
             'title' => [
                 'string',
+                'required',
                 'max:200',
             ],
             'description' => [
                 'string',
+                'required',
                 'max:600'
             ],
             'keyword' => [
                 'string',
+                'required',
                 'max:255',
             ],
             'domain' => [
                 'string',
-                'max:100',
+                'required',
+                'max:255', Rule::unique('sites')->ignore(request()->route('id'))
             ],
             'logo' => [
                 'file',
@@ -52,7 +56,7 @@ class SiteRequest extends FormRequest
             'template_id' => [
                 'integer',
                 'numeric',
-                'nullable',
+                'required',
             ],
             'navigations' => [
                 'string',

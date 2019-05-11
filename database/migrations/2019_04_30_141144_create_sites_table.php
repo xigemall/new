@@ -19,7 +19,7 @@ class CreateSitesTable extends Migration
             $table->char('title',200)->comment('网站标题')->default('')->index();
             $table->string('description',600)->comment('网站描述')->default('')->nullable();
             $table->string('keyword')->comment('网站关键字')->default('')->nullable();
-            $table->char('domain',100)->comment('网站域名')->default('');
+            $table->string('domain')->comment('网站域名')->default('')->unique();
             $table->string('logo')->comment('网站LOGO图片')->default('')->nullable();
             $table->string('ico')->comment('网站ICO')->default('')->nullable();
             $table->unsignedTinyInteger('template_id')->comment('网站模板 0随机模板 (1)其它模板')->default(0);

@@ -44,10 +44,10 @@ class SiteController extends Controller
     public function create()
     {
         $form = new Form(new Site());
-        $form->text('title', '网站标题')->default('');
-        $form->text('description', '网站描述')->default('');
-        $form->text('keyword', '网站关键字')->default('');
-        $form->text('domain', '网站域名')->default('');
+        $form->text('title', '网站标题')->default('')->required();
+        $form->text('description', '网站描述')->default('')->required();
+        $form->text('keyword', '网站关键字')->default('')->required();
+        $form->text('domain', '网站域名')->default('')->required();
         $form->image('logo', '网站LOGO图片')->default('');
         $form->image('ico', '网站ICO')->default('');
         $form->select('template_id', '模板选择')
@@ -59,7 +59,8 @@ class SiteController extends Controller
                 })->all();
                 return $newData;
             })
-            ->ajax('/admin/template');
+            ->ajax('/admin/template')
+            ->required();
         // 关联栏目
         $form->text('navigations', '网站栏目')->required()->default('');
         return $form;
@@ -98,10 +99,10 @@ class SiteController extends Controller
     public function edit($id)
     {
         $form = new Form(Site::findOrFail($id));
-        $form->text('title', '网站标题')->default($form->model()->title);
-        $form->text('description', '网站描述')->default($form->model()->description);
-        $form->text('keyword', '网站关键字')->default($form->model()->keyword);
-        $form->text('domain', '网站域名')->default($form->model()->domain);
+        $form->text('title', '网站标题')->default($form->model()->title)->required();
+        $form->text('description', '网站描述')->default($form->model()->description)->required();
+        $form->text('keyword', '网站关键字')->default($form->model()->keyword)->required();
+        $form->text('domain', '网站域名')->default($form->model()->domain)->required();
 
         $form->hidden('logo1')->default($form->model()->logo);
         $form->display('logo', '网站LOGO图片')->with(function ($value) use ($form) {
@@ -123,6 +124,7 @@ class SiteController extends Controller
                 return $newData;
             })
             ->ajax('/admin/template')
+            ->required()
             ->default($form->model()->template_id);
         // 关联栏目
         $navigations = implode(',', $form->model()->navigations()->pluck('name')->all());
