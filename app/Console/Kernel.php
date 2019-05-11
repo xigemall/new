@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\Admin\WechatArticle;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +14,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        //微信公众号获取文章
+        WechatArticle::class,
     ];
 
     /**
@@ -26,6 +28,13 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        //每十分钟执行一次任务
+        if(config('idata.open_cron')){
+            // 开启定时
+            $schedule->command(WechatArticle::class)->everyTenMinutes()->withoutOverlapping();
+        }
+
     }
 
     /**

@@ -9,19 +9,10 @@ use Illuminate\Support\Facades\Artisan;
 
 class ArticleService
 {
-    protected $showApi;
-
-    public function __construct(IdataApiService $showApi)
-    {
-        $this->showApi = $showApi;
-    }
-
-    public function get()
-    {
-
-    }
-
-    public function getWechatNum()
+    /**
+     *保存文章  （通过api获取微信文章）
+     */
+    public function makeWechatArticle()
     {
         $data = Wechat::get();
         foreach ($data as $k=>$v){
@@ -29,7 +20,6 @@ class ArticleService
                 'id'=>$v->id,
                 'wechat_num'=>$v->wechat_num
             ]);
-
         }
     }
 
