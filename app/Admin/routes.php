@@ -49,5 +49,8 @@ Route::group([
     ]);
 
     // 文章
-    $router->resource('article','ArticleController');
+    $router->post('article/{id}','ArticleController@update');
+    $router->resource('article','ArticleController',[
+        'except'=>['update']
+    ]);
 });

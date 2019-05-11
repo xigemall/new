@@ -12,6 +12,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class ArticleController extends Controller
 {
@@ -29,7 +30,7 @@ class ArticleController extends Controller
      */
     public function index(Content $content)
     {
-        $content->header('微信管理');
+        $content->header('文章管理');
         $content->body($this->getGridList());
         return $content;
     }
@@ -65,7 +66,7 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -76,7 +77,7 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -87,35 +88,49 @@ class ArticleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-//        $form = new Form(Article::findOrFail($id));
-//        $form->text('name', '名称')->default($form->model()->name)->required();
-//        $form->text('wechat_num', '公众号')->default($form->model()->wechat_num)->required();
-//        $data = Site::select('id', 'title')->get();
-//        $form->html(view('admin.wechat.edit', ['data' => $form->model(), 'site' => $data]));
+        $form = new Form(Article::findOrFail($id));
+        $data = Site::select('id', 'title')->get();
+        $form->html(view('admin.article.edit', ['data' => $form->model()->siteNavigationArticle, 'site' => $data]));
         return $form;
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $message = [
+            'site_id' => '网站',
+            'navigation_id' => '栏目',
+        ];
+        $this->validate($request, [
+            'site_id' => [
+                Rule::exists('sites', 'id'),
+            ],
+            'navigation_id' => [
+                Rule::exists('navigations', 'id')->where('site_id', $request->input('site_id')),
+            ]
+        ], [], $message);
+
+        $article = Article::findOrFail($id);
+        $request = $request->only(['site_id', 'navigation_id']);
+        $article->siteNavigationArticle()->update($request);
+        return redirect('/admin/article');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

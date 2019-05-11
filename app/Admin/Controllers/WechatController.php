@@ -121,7 +121,7 @@ class WechatController extends Controller
         });
 //        $newData = $data->load('wechatCollectSiteNavigations');
 //        return response()->json($newData, 201);
-        redirect('/admin/wechat');
+        return redirect('/admin/wechat');
     }
 
     /**
