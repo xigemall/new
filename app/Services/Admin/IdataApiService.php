@@ -22,20 +22,20 @@ class IdataApiService
 
     /**
      * 获取idata微信文章
-     * @param $id
+     * @param $pageToken
      * @param $wechatNum
      * @return array
      */
-    public function getIdataApiArticle($id, $wechatNum)
+    public function getIdataApiArticle($pageToken, $wechatNum)
     {
         $biz = $this->getBiz($wechatNum);
         $data = [];
-        if ($biz) {
-            $result = $this->getApiArticle($biz, $wechatNum);
-            if ($result) {
-                $data = $result;
-            }
+
+        $result = $this->getApiArticle($biz, $wechatNum, $pageToken);
+        if ($result) {
+            $data = $result;
         }
+
         return $data;
     }
 
@@ -72,7 +72,7 @@ class IdataApiService
         } else {
             Log::error('微信公众号:' . $wechatNum . '获取biz报错');
             Log::error($result);
-            return '';
+            abort(400, '微信公众号:' . $wechatNum . '获取biz失败');
         }
     }
 
@@ -80,19 +80,20 @@ class IdataApiService
      * 获取文章
      * @param $biz
      * @param $wechatNum
+     * @param $pageToken
      * @return array
      */
-    protected function getApiArticle($biz, $wechatNum)
+    protected function getApiArticle($biz, $wechatNum, $pageToken)
     {
         $url = 'http://api01.idataapi.cn:8000/post/weixinpro3';
         $params = [
             'biz' => $biz,
             'apikey' => $this->apikey,
-            'pageToken' => 1,
+            'pageToken' => $pageToken,
         ];
         $result = $this->curl->get($url, $params);
         if ($result['retcode'] == 000000) {
-            return $result['data'];
+            return $result;
         } else {
             Log::error('微信公众号:' . $wechatNum . '获取文章报错');
             Log::error($result);
