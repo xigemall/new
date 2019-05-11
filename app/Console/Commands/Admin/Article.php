@@ -2,10 +2,8 @@
 
 namespace App\Console\Commands\Admin;
 
-use App\Models\Wechat;
 use App\Services\Admin\IdataApiService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class Article extends Command
