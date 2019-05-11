@@ -17,7 +17,7 @@ class CreateWechatsTable extends Migration
         Schema::create('wechats', function (Blueprint $table) {
             $table->increments('id');
             $table->char('name', 50)->comment('名称')->default('')->unique();
-            $table->string('wechat_num')->comment('公众号')->default('')->index();
+            $table->string('wechat_num')->comment('公众号')->default('')->unique();
             $table->unsignedInteger('collect_num')->comment('采集数量')->default(0)->index();
             $table->timestamps();
         });

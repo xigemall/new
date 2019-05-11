@@ -29,12 +29,13 @@ class WechatRequest extends FormRequest
                 'string',
                 'max:50',
                 'required',
-                Rule::unique('wechats')->ignore(request()->route('id'))
+//                Rule::unique('wechats')->ignore(request()->route('id'))
             ],
             'wechat_num' => [
                 'string',
                 'max:255',
                 'required',
+//                Rule::unique('wechats')->ignore(request()->route('id'))
             ],
             'site_id' => [
                 'required',
