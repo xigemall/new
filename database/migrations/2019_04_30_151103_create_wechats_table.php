@@ -19,6 +19,8 @@ class CreateWechatsTable extends Migration
             $table->char('name', 50)->comment('名称')->default('')->unique();
             $table->string('wechat_num')->comment('公众号')->default('')->unique();
             $table->unsignedInteger('collect_num')->comment('采集数量')->default(0)->index();
+            $table->unsignedInteger('site_id')->comment('网站ID');
+            $table->unsignedInteger('navigation_id')->comment('栏目ID');
             $table->timestamps();
         });
     }

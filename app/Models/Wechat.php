@@ -10,10 +10,7 @@ class Wechat extends Model
         'name',
         'wechat_num',
         'collect_num',
+        'site_id',
+        'navigation_id',
     ];
-
-    public function wechatCollectSiteNavigations()
-    {
-        return $this->hasOne(WechatCollectSiteNavigation::class);
-    }
 }

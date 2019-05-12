@@ -66,12 +66,7 @@ class WechatController extends Controller
      */
     public function store(WechatRequest $request)
     {
-        DB::transaction(function () use ($request, &$data) {
-            $data = Wechat::create($request->input());
-            $data->wechatCollectSiteNavigations()->create($request->input());
-        });
-//        $newData = $data->load('wechatCollectSiteNavigations');
-//        return response()->json($newData,201);
+        $data = Wechat::create($request->input());
     }
 
 
@@ -83,7 +78,7 @@ class WechatController extends Controller
      */
     public function show($id)
     {
-        $data = Wechat::with('wechatCollectSiteNavigations')->findOrFail($id);
+        $data = Wechat::findOrFail($id);
         return response()->json($data, 200);
     }
 
@@ -113,14 +108,7 @@ class WechatController extends Controller
     public function update(WechatRequest $request, $id)
     {
         $data = Wechat::findOrFail($id);
-        DB::transaction(function () use ($request, &$data) {
-            $data->update($request->input());
-            $data->wechatCollectSiteNavigations->site_id = $request->input('site_id');
-            $data->wechatCollectSiteNavigations->navigation_id = $request->input('navigation_id');
-            $data->wechatCollectSiteNavigations->save();
-        });
-//        $newData = $data->load('wechatCollectSiteNavigations');
-//        return response()->json($newData, 201);
+        $data->update($request->input());
         return redirect('/admin/wechat');
     }
 
@@ -133,7 +121,6 @@ class WechatController extends Controller
     public function destroy($id)
     {
         $data = Wechat::findOrFail($id);
-        $data->wechatCollectSiteNavigations()->delete();
         $data->delete();
         return response()->json('', 204);
     }
