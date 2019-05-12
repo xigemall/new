@@ -17,8 +17,8 @@ class CKEditor extends Field
 
     public function render()
     {
-        $this->script = "$('textarea.{$this->getElementClassString()}').ckeditor();";
-
-        return parent::render();
+//        $this->script = "$('textarea.{$this->getElementClassString()}').ckeditor();";
+//
+//        return parent::render();
     }
 }

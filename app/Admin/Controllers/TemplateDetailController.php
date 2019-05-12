@@ -48,7 +48,8 @@ class TemplateDetailController extends Controller
     {
         $form = new Form(new Template);
         $form->text('name', '文件名')->required()->placeholder('index.html');
-        $form->ckeditor('html', '模板');
+        $form->textarea('html','模板')->rows(30);
+//        $form->ckeditor('html', '模板');
         return $form;
     }
 
@@ -121,7 +122,8 @@ class TemplateDetailController extends Controller
         $form->hidden('edit')->default($id);
         $form->text('name', '文件名')->required()->placeholder('index.html')->default($name);
         $html = file_get_contents(public_path('uploads/' . $file));
-        $form->ckeditor('html', '模板')->default($html);
+        $form->textarea('html','模板')->rows(30)->default($html);
+//        $form->ckeditor('html', '模板')->default($html);
         return $form;
     }
 
