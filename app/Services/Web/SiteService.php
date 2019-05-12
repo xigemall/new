@@ -88,6 +88,9 @@ class SiteService
         $html = response($view)->getContent();
 
         $publicPath = public_path('static/' . $site->id);
+        if (!is_dir(public_path('static'))) {
+            mkdir(public_path('static'), 0777);
+        }
         if (!is_dir($publicPath)) {
             mkdir($publicPath, 0777);
         }
@@ -117,6 +120,9 @@ class SiteService
                 $html = response($view)->getContent();
 
                 $publicPath = public_path('static/' . $site->id . '/' . $name);
+                if (!is_dir(public_path('static'))) {
+                    mkdir(public_path('static'), 0777);
+                }
                 if (!is_dir($publicPath)) {
                     mkdir($publicPath, 0777);
                 }
