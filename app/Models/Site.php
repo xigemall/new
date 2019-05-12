@@ -27,8 +27,8 @@ class Site extends Model
         return $this->hasMany(Navigation::class);
     }
 
-    public function siteNavigationArticles()
+    public function articles()
     {
-        return $this->hasMany(SiteNavigationArticle::class);
+        return $this->hasMany(Article::class);
     }
 }
