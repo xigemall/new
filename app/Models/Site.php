@@ -27,13 +27,8 @@ class Site extends Model
         return $this->hasMany(Navigation::class);
     }
 
-    public function articles($navigationId = 0)
+    public function articles()
     {
-        if ($navigationId) {
-            return $this->hasMany(Article::class)->where('navigation_id', $navigationId);
-        } else {
-            return $this->hasMany(Article::class);
-        }
-
+        return $this->hasMany(Article::class);
     }
 }
