@@ -90,6 +90,8 @@ class Article extends Command
                 $article = new \App\Models\Article();
                 $article->name = $wechat->name;
                 $article->wechat_num = $wechat->wechat_num;
+                $article->site_id = $wechat->site_id;
+                $article->navigation_id = $wechat->navigation_id;
                 $article->wechat_article_id = $apiArticle['id'];
                 $article->title = $apiArticle['title'];
                 $article->view_count = $apiArticle['viewCount'];
@@ -104,9 +106,6 @@ class Article extends Command
                 $article->save();
                 $wechat->increment('collect_num');
                 $wechat->save();
-                //
-                $wechatCollect = $wechat->wechatCollectSiteNavigations->toArray();
-                $article->siteNavigationArticle()->create($wechatCollect);
 
                 $pageToken = $pageToken + 1;
             }
