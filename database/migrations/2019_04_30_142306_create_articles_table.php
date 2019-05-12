@@ -18,7 +18,9 @@ class CreateArticlesTable extends Migration
             $table->increments('id');
             $table->string('name')->comment('公众号名称')->default('')->nullable();
             $table->string('wechat_num')->comment('微信公众号')->default('')->nullable()->index();
-            $table->string('wechat_article_id')->comment('文章ID')->index()->default('');
+            $table->unsignedInteger('site_id')->comment('网站ID')->index()->nullable();
+            $table->unsignedInteger('navigation_id')->comment('栏目ID')->index()->nullable();
+            $table->string('wechat_article_id')->comment('文章ID')->index()->default('')->nullable();
             $table->string('title')->comment('文章标题')->default('')->nullable();
             $table->unsignedInteger('view_count')->comment('观看数')->default(0)->nullable();
             $table->longText('content')->comment('文章正文')->nullable();

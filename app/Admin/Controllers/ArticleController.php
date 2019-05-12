@@ -39,12 +39,8 @@ class ArticleController extends Controller
     {
         $grid = new Grid(new Article());
         $grid->title('标题');
-        $grid->siteNavigationArticle()->site_id('所属网站')->display(function ($siteId) {
-            return Site::findOrFail($siteId)->value('title');
-        });
-        $grid->siteNavigationArticle()->navigation_id('所属栏目')->display(function ($nav) {
-            return Navigation::findOrFail($nav)->value('name');
-        });
+        $grid->site()->title('所属网站');
+        $grid->navigation()->name('所属栏目');
         $grid->view_count('阅读数');
 
         $grid->actions(function ($actions) {
@@ -95,7 +91,7 @@ class ArticleController extends Controller
     {
         $form = new Form(Article::findOrFail($id));
         $data = Site::select('id', 'title')->get();
-        $form->html(view('admin.article.edit', ['data' => $form->model()->siteNavigationArticle, 'site' => $data]));
+        $form->html(view('admin.article.edit', ['data' => $form->model(), 'site' => $data]));
         return $form;
     }
 
@@ -123,7 +119,7 @@ class ArticleController extends Controller
 
         $article = Article::findOrFail($id);
         $request = $request->only(['site_id', 'navigation_id']);
-        $article->siteNavigationArticle()->update($request);
+        $article->update($request);
         return redirect('/admin/article');
     }
 
@@ -136,7 +132,6 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         $data = Article::findOrFail($id);
-        $data->siteNavigationArticle()->delete();
         $data->delete();
         return response()->json($data, 204);
     }

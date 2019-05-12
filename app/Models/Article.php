@@ -9,6 +9,8 @@ class Article extends Model
     protected $fillable = [
         'name',
         'wechat_num',
+        'site_id',
+        'navigation_id',
         'wechat_article_id',
         'title',
         'view_count',
@@ -24,10 +26,16 @@ class Article extends Model
         'image_urls' => 'array',
         'audio_urls' => 'array',
         'video_urls' => 'array',
+        'comments' => 'array',
     ];
 
-    public function siteNavigationArticle()
+    public function site()
     {
-        return $this->hasOne(SiteNavigationArticle::class);
+        return $this->belongsTo(Site::class);
+    }
+
+    public function navigation()
+    {
+        return $this->belongsTo(Navigation::class);
     }
 }
