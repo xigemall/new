@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+    <meta name="baidu-site-verification" content="MfC8ppEukL"/>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="B98xKsd3svxMxDRaDSHgk4t7sqQjTuBJOzDhdzev">
+
+    <title> {{$site->title}} </title>
+    <meta name="description" content="{{$site->description}}"/>
+    <meta name="keywords" content="{{$site->keyword}}"/>
+
+    <meta name="author" content="Summer"/>
+
+    <link rel="shortcut icon" href="{{$site->ico}}"/>
+
+    <!-- Styles -->
+    <link href="https://iocaffcdn.phphub.org//build/css/0581d3cf5f6c7a36bc65-vendors.css" rel="stylesheet">
+    <link href="https://iocaffcdn.phphub.org//build/css/b60fdc4fda399d72091d-app.css" rel="stylesheet">
+
+</head>
+<body class=" wildcard-page">
+
+<!-- Scripts -->
+<script>
+    window.Laravel = {"csrfToken": "B98xKsd3svxMxDRaDSHgk4t7sqQjTuBJOzDhdzev"}    </script>
+
+<script>
+    window.Config = {
+        'GA_Tracking_ID': 'UA-133323996-1',
+        'user_id': 0,
+        'search_user_id': 0,
+        'cdn_domain': 'iocaffcdn.phphub.org',
+        'domain': 'learnku.com',
+        'request_interval': 600000, // 消息通知检测周期
+        'notification_count': 0,
+        'token': 'B98xKsd3svxMxDRaDSHgk4t7sqQjTuBJOzDhdzev',
+        'environment': 'production',
+        'url': 'https://learnku.com',
+        'tags_url': '',
+        'community': {
+            'id': 5,
+            'name': 'Vue.js'
+        },
+        'routes': {
+            'notificationsCount': 'https://learnku.com/notifications/count',
+            'upload_image': 'https://learnku.com/courses/upload_image',
+            // 社区搜索
+            'api_search': 'https://learnku.com/communities/vuejs/api_search',
+            'collections_store': 'https://learnku.com/collections',
+            'collections_my': 'https://learnku.com/collections/my/ajax',
+        },
+        'cdnDomain': 'https://iocaffcdn.phphub.org/',
+        'following_users': [],
+        'search_type': 'standard',
+        'book_id': 0,
+        'is_docs': "no",
+        'article_id': 0,
+        'topic_id': 25937,
+        'user_settings': {
+            'visit_topic_patches_page': false,
+            'select_best_answer_guide': false
+        }
+    };
+
+    var ShowCrxHint = 'no';
+</script>
+
+<style>
+
+    .ui.top.menu {
+        border-top: 4px solid #f46660;
+    }
+
+    .ui.fluid.search .results {
+        width: 550px;
+    }
+
+    @media only screen and (max-width: 767px) {
+        .ui.top.menu > .ui.container {
+            height: 52px;
+            flex-direction: initial;
+        }
+    }
+
+    /* 顶部导航栏 */
+    .ui.top.menu {
+        border-top: 4px solid #4fc08d;
+    }
+
+    /* 右边导航栏顶部样式 */
+    .ui.top-color.segment:not(.inverted) {
+        border-top: 2px solid #4fc08d;
+    }
+
+    /* 右边导航栏顶部样式 */
+    .ui.top-color.card:not(.inverted) {
+        border-top: 2px solid #4fc08d;
+    }
+
+    /* 主要按钮 */
+
+    .ui.primary.buttons .button, .ui.primary.button {
+        background-color: #4fc08d;
+        border-color: #4fc08d;
+    }
+
+    /* 主要按钮选中状态 */
+    .ui.primary.buttons .button:hover, .ui.primary.button:hover {
+        background-color: #4fc08d;
+        border-color: #4fc08d;
+    }
+
+    /* 外框按钮 */
+    .ui.basic.primary.buttons .button, .ui.basic.primary.button {
+        color: #4fc08d !important;
+        box-shadow: 0px 0px 0px 1px #4fc08d inset !important;
+    }
+
+    /* 外框按钮选中状态 */
+    .ui.basic.primary.buttons .button:hover, .ui.basic.primary.button:hover {
+        color: #4fc08d !important;
+        box-shadow: 0px 0px 0px 1px #4fc08d inset !important;
+    }
+
+    .ui.basic.primary.buttons .active.button, .ui.basic.primary.active.button {
+        color: #4fc08d !important;
+        box-shadow: 0px 0px 0px 1px #4fc08d inset !important;
+    }
+
+    .ui.basic.buttons .button:hover, .ui.basic.button:hover {
+        box-shadow: 0px 0px 0px 1px #4fc08d inset !important;
+    }
+</style>
+
+
+<div class="pusher">
+
+    <div class="main container">
+
+        <nav class="ui main borderless menu top stackable topnav" id="topnav">
+            <div class="ui container">
+
+                <div class="ui inline scrolling community-nav dropdown mr-2"
+                     style="padding-left: 22px;display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center;">
+                    <div class="text site-logo" style="color:#888888;display: flex;">
+
+                        <img class="ui image" style="width:26px;height:26px;margin-top:-2px;" src="{{$site->logo}}">
+                        <span class="site-name">Vue.js</span>
+                        <i class="dropdown icon ml-3"></i>
+                    </div>
+                    <div class="menu ml-4" style="max-height: 440px;">
+
+                        <div class="ui icon search input" style="width: 162px;">
+                            <i class="search icon"></i>
+                            <input type="text" placeholder="搜索社区">
+                        </div>
+
+                        <a class="item pr-3" href="/">
+                            <img class="ui image" style="width:20px;height:20px;margin-top:-2px;"
+                                 src="https://iocaffcdn.phphub.org/uploads/images/201901/24/1/OyBnfB2vlk.png"> LearnKu
+                        </a>
+
+
+                        <div class="divider"></div>
+                        <div class="header">
+                            推荐社区（6）
+                        </div>
+                        <a class="item" href="https://learnku.com/php" style="padding-right: 2.2em!important;">
+                            <img class="ui image" style="width:20px;height:20px;margin-top:-2px;"
+                                 src="https://iocaffcdn.phphub.org//uploads/communities/Y7fElYYwCFjTTXCdwPNW.png"> PHP
+                        </a>
+                        <a class="item" href="https://learnku.com/ios" style="padding-right: 2.2em!important;">
+                            <img class="ui image" style="width:20px;height:20px;margin-top:-2px;"
+                                 src="https://iocaffcdn.phphub.org//uploads/communities/0MWz89TgPG0AaPbULcWT.png"> iOS
+                        </a>
+                        <a class="item" href="https://learnku.com/golang" style="padding-right: 2.2em!important;">
+                            <img class="ui image" style="width:20px;height:20px;margin-top:-2px;"
+                                 src="https://iocaffcdn.phphub.org//uploads/communities/sNljssWWQoW6J88O9G37.png">
+                            Golang
+                        </a>
+                        <a class="item" href="https://learnku.com/vuejs" style="padding-right: 2.2em!important;">
+                            <img class="ui image" style="width:20px;height:20px;margin-top:-2px;"
+                                 src="https://iocaffcdn.phphub.org//uploads/communities/hIZjRRdF8oVYZy69XJnT.png">
+                            Vue.js
+                        </a>
+                        <a class="item" href="https://learnku.com/python" style="padding-right: 2.2em!important;">
+                            <img class="ui image" style="width:20px;height:20px;margin-top:-2px;"
+                                 src="https://iocaffcdn.phphub.org//uploads/communities/mTBLIP7o0gVGn3ZCphpN.png">
+                            Python
+                        </a>
+                        <a class="item" href="https://learnku.com/laravel" style="padding-right: 2.2em!important;">
+                            <img class="ui image" style="width:20px;height:20px;margin-top:-2px;"
+                                 src="https://iocaffcdn.phphub.org//uploads/communities/WtC3cPLHzMbKRSZnagU9.png">
+                            Laravel
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="ui centered grid container stackable">
+            <div class="twelve wide column right-side stacked segments">
+
+
+                <div class="ui segment topic-index-list pt-1" style="padding: 8px 6px;">
+                    <div class="content pl-3 pr-3" style="padding-top: 6px;">
+
+                        <div class="ui secondary menu small mb-0 pb-0 topic-nav">
+                            @foreach($site->navigations as $v)
+                            <a data-content="最后回复排序" href="{{asset('static/'.$v->site_id.'/'.$v->name.'.html')}}"
+                               class="ui item popover active">{{$v->name}}</a>
+                            @endforeach
+
+                        </div>
+
+                        <div class="ui divider mb-1"
+                             style="border-top: none;border-bottom: 1px solid rgb(219, 224, 226);margin-top: 6px;"></div>
+
+                        <h1>文章</h1>
+                        <div class="simple topic-list rm-link-color mt-0">
+
+                            @foreach($site->navigationArticles as $v)
+                            <div class="py-2 simple-topic">
+                                <a class="topic-title-wrap rm-tdu"
+                                   href="{{asset('static/'.$v->site_id.'/'.$v->navigation->name.'/'.$v->id.'.html')}}"
+                                   target="_blank">
+                <span class="topic-title">
+                                            <i class="icon checkmark ui popover" style="color:#21ba45"
+                                               data-position="top center" title="已解决"></i>
+                    
+                    {{$v->title}}
+                </span>
+
+                                    <span class=" hide-on-mobile simple-topic-meta">
+                         <span class="count_set">
+
+                             <span class="count_of_visits" title="查看数">
+                               {{$v->view_count}}
+                             </span>
+                         </span>
+                     </span>
+
+                                </a>
+
+                            </div>
+                            @endforeach
+                        </div>
+
+                        <div class="ui pagination menu stackable">
+                            <span class="item disabled"><i class="left arrow icon"></i></span>
+                            <span class="item active">1</span>
+                            <a class="item" href="https://learnku.com/vuejs?page=2">2</a>
+                            <a class="item" href="https://learnku.com/vuejs?page=3">3</a>
+                            <a class="item" href="https://learnku.com/vuejs?page=4">4</a>
+                            <a class="item" href="https://learnku.com/vuejs?page=2" rel="next">
+                                <i class="right arrow icon"></i>
+                            </a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="four wide column stackable ">
+                <div class="item header sidebar">
+                    <h2>广告位置</h2>
+                    @foreach($site->advertisings as $v)
+                    <div class="ui card responsive">
+                        <a class="lh-0" href="{{$v->link}}" target="_blank">
+                            <img src="{{$v->img}}" class="w-100 ui popover" title="">
+                        </a>
+
+                    </div>
+                    <p>{{$v->title}}</p>
+                    @endforeach
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="ui inverted vertical footer segment">
+        <div class="ui center aligned container">
+            <div class="ui stackable inverted divided grid">
+                <div class="four wide column">
+                    <h4 class="ui inverted header">
+                        关于 LearnKu
+                    </h4>
+                    <div class="ui inverted  text-center">
+                        <div class="lh-3">LearnKu 是终身学习者的编程知识社区</div>
+                        <div class="lh-3">保持好奇，刻意练习，每日精进</div>
+                    </div>
+
+                </div>
+                <div class="four wide column">
+                    <h4 class="ui inverted header">友情链接</h4>
+                    <div class="ui inverted link list text-mute">
+                        @foreach($site->blogrolls as $v)
+                        <a href="{{$v->link}}" class="item" target="_blank" style="line-height: 28px;">{{$v->title}}</a>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <h4 class="ui inverted header">赞助商</h4>
+                    <div class="ui inverted link list">
+                        <a href="https://passport.ucloud.cn/?invitation_code=rami45zj5kpm&amp;ytag=reZ5E7" class="item"
+                           target="_blank" style="line-height: 28px;">
+                            <img src="https://iocaffcdn.phphub.org/uploads/banners/bQawWl3vT5dc2lYx5JZ7.png"
+                                 title="本站服务器由 UCloud 赞助" class="ui popover"
+                                 style="height: 20px;margin-bottom: -4px;margin-right: 3px;display: inline-block;">
+                        </a>
+                        <a href="https://console.upyun.com/register/?invite=HySQsrmVb" class="item" target="_blank"
+                           style="line-height: 28px;">
+                            <img src="https://iocaffcdn.phphub.org/uploads/banners/XPtLlZmIN1cQbLuDFEON.png"
+                                 title="Composer 镜像赞助商" class="ui popover"
+                                 style="height: 20px;margin-bottom: -4px;margin-right: 3px;display: inline-block;">
+                        </a>
+                        <a href="http://www.sendcloud.net/" class="item" target="_blank" style="line-height: 28px;">
+                            <img src="https://iocaffcdn.phphub.org/uploads/banners/JpTCK6OKYBIrBIWdtob8.png"
+                                 title="订阅邮件赞助商：SendCloud" class="ui popover"
+                                 style="height: 20px;margin-bottom: -4px;margin-right: 3px;display: inline-block;">
+                        </a>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <h4 class="ui inverted header">其他信息</h4>
+                    <div class="ui inverted link list">
+
+                        <li>
+                            <a class="item" href="https://learnku.com/contact">
+                                <i class="icon wechat" aria-hidden="true" target="_blank"></i> 联系站长
+                            </a>
+                        </li>
+                        <li><a class="item" href="https://learnku.com/issues" target="_blank"><i
+                                class="icon mail outline"></i> PHP / Laravel 月刊</a></li>
+
+                        <li>
+                            <a class="item" href="https://learnku.com/contact" target="_blank">
+                                <i class="icon student"></i> 成为讲师
+                            </a>
+                        </li>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="ui inverted section divider"></div>
+            <div>
+
+                <p style="font-size:0.9em; margin-top:20px;margin-bottom: -8px;color: rgb(137, 137, 140);"
+                   class="ui inverted signature">
+                    由 <a href="https://learnku.com/contact" target="_blank" style="color: inherit;">Summer</a> 设计和编码
+                    <span style="color: #e27575;font-size: 14px;">❤</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="ui modal login small" style="width:400px;margin: 0em 0em 0em -200px;">
+    <i class="close icon"></i>
+    <div class="header">
+        <h4 class="modal-title ">
+            <img class="ui image display-inline-block mr-2" style="width:32px;height:32px;"
+                 src="https://iocaffcdn.phphub.org/uploads/images/201901/24/1/OyBnfB2vlk.png"> <span
+                style="position: relative;top: 4px;">请登录</span>
+        </h4>
+    </div>
+    <div class="content">
+        <div class="ui message warning">
+            <i class="icon info"></i> Laravel China 老用户可以从 <a href="https://laravel-china.org/migration"
+                                                              target="_blank">此处登入</a>
+        </div>
+
+        <form class="ui form login" role="form" method="POST" action="https://learnku.com/auth/login"
+              accept-charset="UTF-8">
+            <input type="hidden" name="_token" value="B98xKsd3svxMxDRaDSHgk4t7sqQjTuBJOzDhdzev">
+            <input type="hidden" name="remember" value="yes">
+
+            <input type="hidden" name="return_back" value="no">
+
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="user icon"></i>
+                    <input type="text" name="username" placeholder="手 机 or 邮 箱" value="" required>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="lock icon"></i>
+                    <input type="password" name="password" placeholder="密 码" value="" required>
+                </div>
+            </div>
+            <button class="ui green right labeled icon button" type="submit">
+                <i class="right arrow icon"></i>
+                提交
+            </button>
+
+            <div class="pull-right mt-2 rm-link-color">
+                <a class="btn btn-link " href="https://learnku.com/auth/forget" target="_blank">
+                    忘记密码?
+                </a>
+                <span class="text-mute">or</span>
+                <a class="btn btn-link " href="https://learnku.com/auth/register" target="_blank">
+                    注册
+                </a>
+            </div>
+
+            <div class="clearfix"></div>
+
+
+            <div class="ui horizontal divider fs-tiny text-mute">
+                第三方账号登录
+            </div>
+
+
+            <a class="ui button fluid mt-2 basic" id="login-required-submit"
+               href="https://learnku.com/auth/oauth?driver=github"><i class="fa fa-github-alt"></i> GitHub 登录</a>
+
+
+        </form>
+    </div>
+</div>
+</body>
+
+<!-- Scripts -->
+<script src="https://iocaffcdn.phphub.org//build/js/eeee270aba53346df056-vendors.js"></script>
+<script src="https://iocaffcdn.phphub.org//build/js/168d368572eb20187101-app.js"></script>
+</html>
