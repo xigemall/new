@@ -21,7 +21,7 @@ class BlogrollController extends Controller
      */
     public function index(Content $content)
     {
-        $content->header('网站');
+        $content->header('友情链接');
         $content->body($this->getGridList());
         return $content;
 //        $data = Blogroll::with('blogrollSites')->get();
@@ -50,6 +50,7 @@ class BlogrollController extends Controller
      */
     public function create()
     {
+
         $form = new Form(new Blogroll);
         $form->text('title', '标题')->default('')->required();
         $form->url('link', '链接地址')->default('');
