@@ -67,6 +67,7 @@ class WechatController extends Controller
     public function store(WechatRequest $request)
     {
         $data = Wechat::create($request->input());
+        return redirect('/admin/wechat');
     }
 
 
