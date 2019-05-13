@@ -40,25 +40,26 @@ class TemplateService
      */
     public function store($request)
     {
-        $path = $this->saveTemplateFile($request);
-        $request->offsetSet('file', $path);
         $data = Template::create($request->input());
+        $path = $this->saveTemplateFile($data->id);
+        $data->file = $path;
+        $data->save();
         return $data;
     }
 
     /**
      * 保存模板文件
      */
-    protected function saveTemplateFile()
+    protected function saveTemplateFile($id)
     {
         // 上传文件临时路径
-        $temporaryPath = 'files/template_tmp/' . request('name');
+        $temporaryPath = 'files/template_tmp/' . $id;
 
         //上传文件路径
-        $path = 'files/template/' . request('name');
+        $path = 'files/template/' . $id;
 
         // 保存上传的压缩文件
-        $file = $this->makeCompressionFile($temporaryPath);
+        $file = $this->makeCompressionFile($temporaryPath, $id);
         //解压文件
         $this->compressionFile($file, $path);
         return 'uploads/' . $path;
@@ -68,13 +69,13 @@ class TemplateService
      * 保存上传的压缩文件
      * @return mixed
      */
-    protected function makeCompressionFile(string $path)
+    protected function makeCompressionFile(string $path, $id)
     {
         $file = request()->file('file');
         // 文件后缀
         $originalExtension = $file->getClientOriginalExtension();
         //文件名
-        $name = request('name') . '.' . $originalExtension;
+        $name = $id . '.' . $originalExtension;
         $fileName = request('file')->storeAs($path, $name, 'admin');
         return $fileName;
     }
@@ -91,41 +92,6 @@ class TemplateService
         Zipper::make($file)->extractTo($path);
     }
 
-    public function showGrid(int $id)
-    {
-        $data = Template::findOrFail($id);
-        $files = $this->getAllTemplateFile($data->file);
-//        $grid = new Grid($data);
-        return Admin::grid($data, function (Grid $grid) {
-            $grid->column('name', '模板文件');
-        });
-//        if($files){
-//
-//        }else{
-//            $grid->column('','模板文件');
-//        }
-
-//        return $grid;
-    }
-
-    /**
-     * 编辑
-     * @param Request $request
-     * @param $id
-     * @return mixed
-     */
-//    public function update(Request $request, $id)
-//    {
-//        $data = Template::findOrFail($id);
-//        if ($request->hasFile('file')) {
-//            //模板文件重新上传了
-//            $this->deleteFile($data->file);
-//            $path = $this->saveTemplateFile($request);
-//            $request->offsetSet('file', $path);
-//        }
-//        $data->update($request->input());
-//        return $data;
-//    }
 
     /**
      * 删除模板文件
