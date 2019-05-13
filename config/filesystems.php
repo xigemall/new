@@ -69,6 +69,22 @@ return [
             'visibility' => 'public',
             'url' => env('APP_URL').'/uploads',
         ],
+
+        // 静态文件
+        'static' => [
+            'driver' => 'local',
+            'root' => public_path('static'),
+            'visibility' => 'public',
+            'url' => env('APP_URL') . '/static',
+        ],
+
+        // blade文件
+        'resource' => [
+            'driver' => 'local',
+            'root' => resource_path('views'),
+            'visibility' => 'public',
+            'url' => env('APP_URL') . '/views',
+        ],
     ],
 
 ];
