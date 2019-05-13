@@ -39,6 +39,16 @@ class SiteService
     }
 
     /**
+     * 删除网站静态文件、balde文件
+     * @param int $siteId
+     */
+    public function removeStaticFile(int $siteId)
+    {
+        Storage::disk('static')->deleteDirectory($siteId);
+        Storage::disk('resource')->deleteDirectory($siteId);
+    }
+
+    /**
      *设置静态文件
      * @param $site
      */
