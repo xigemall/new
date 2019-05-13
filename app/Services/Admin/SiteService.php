@@ -7,6 +7,7 @@ namespace App\Services\Admin;
 use App\Models\Site;
 use Encore\Admin\Grid;
 use Illuminate\Support\Facades\DB;
+use Overtrue\Pinyin\Pinyin;
 
 class SiteService
 {
@@ -55,8 +56,11 @@ class SiteService
             //栏目保存
             if ($request->input('navigations')) {
                 $navigations = explode(',', $request->input('navigations'));
-                $navigationsArray = array_map(function ($v) {
-                    return ['name' => $v];
+                $pinyin = new Pinyin();
+                $navigationsArray = array_map(function ($v) use ($pinyin) {
+                    $pinyiName = $pinyin->sentence($v);
+                    $pinyiName = str_replace(' ', '', $pinyiName);
+                    return ['name' => $v, 'pinyin' => $pinyiName];
                 }, $navigations);
                 $data->navigations()->createMany($navigationsArray);
             }
@@ -81,8 +85,11 @@ class SiteService
             $data->navigations()->delete();
             if ($request->input('navigations')) {
                 $navigations = explode(',', $request->input('navigations'));
-                $navigationsArray = array_map(function ($v) {
-                    return ['name' => $v];
+                $pinyin = new Pinyin();
+                $navigationsArray = array_map(function ($v) use ($pinyin) {
+                    $pinyiName = $pinyin->sentence($v);
+                    $pinyiName = str_replace(' ', '', $pinyiName);
+                    return ['name' => $v, 'pinyin' => $pinyiName];
                 }, $navigations);
                 $data->navigations()->createMany($navigationsArray);
             }
