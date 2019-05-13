@@ -19,7 +19,18 @@ class IndexController extends Controller
 
     public function index(Request $request)
     {
-        return $this->site->index();
+        //当前域名
+        $domain = $request->url();
+        // 网站
+        $site = Site::where('domain', $domain)->first();
+
+        if (!$this->site->check($site)) {
+            // 无静态文件
+            $this->site->set($site);
+        }
+
+        \View::addExtension('html', 'php');
+        return view()->file(public_path('/static/' . $site->id . '/index.html'));
     }
 
 }

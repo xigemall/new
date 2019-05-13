@@ -24,13 +24,26 @@ class SiteService
         $this->template = $templateService;
     }
 
-    public function index()
+    /**
+     * 检测网站是否有静态文件
+     * @param $site
+     * @return bool
+     */
+    public function check($site)
     {
-        //当前域名
-        $domain = request()->url();
-        // 网站
-        $site = Site::where('domain', $domain)->first();
+        $path = public_path('static/' . $site->id);
+        if (is_dir($path)) {
+            return true;
+        }
+        return false;
+    }
 
+    /**
+     *设置静态文件
+     * @param $site
+     */
+    public function set($site)
+    {
         // 获取广告
         $advertising = $this->getAdvertising($site->id);
         $site->advertisings = $advertising;
@@ -39,14 +52,6 @@ class SiteService
         $blogroll = $this->getBlogroll($site->id);
         $site->blogrolls = $blogroll;
 
-        $this->moveHtml($site);
-
-        \View::addExtension('html', 'php');
-        return view()->file(public_path('/static/' . $site->id . '/index.html'));
-    }
-
-    protected function moveHtml($site)
-    {
         //创建blade文件地址
         $viewPath = $this->makeBladeFolder($site->id);
         $templatePath = $site->template->file;
@@ -74,7 +79,7 @@ class SiteService
      * @param $viewPath
      * @param $site
      */
-    public function makeList($name, $file, $viewPath, $site)
+    protected function makeList($name, $file, $viewPath, $site)
     {
         $newName = $name . '.blade.php';
         copy(public_path('uploads/' . $file), $viewPath . '/' . $newName);
@@ -104,7 +109,7 @@ class SiteService
      * @param $viewPath
      * @param $file
      */
-    public function makeDetailArticle($site, $name, $viewPath, $file)
+    protected function makeDetailArticle($site, $name, $viewPath, $file)
     {
         $name = str_replace('-detail', '', $name);
         $viewPath = $this->makeBladeFolder($site->id . '/' . $name);
