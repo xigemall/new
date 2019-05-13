@@ -21,7 +21,7 @@ class SiteService
         $grid = new Grid(new Site());
         $grid->domain('域名');
         $grid->visit('访问量');
-        $grid->SiteNavigationArticles('文章数')->display(function ($comments) {
+        $grid->articles('文章数')->display(function ($comments) {
             $count = count($comments);
             return "<span class='label label-warning'>{$count}</span>";
         });
