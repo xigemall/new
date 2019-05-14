@@ -82,16 +82,20 @@ class SiteService
         $request = $this->checkFile($request);
         DB::transaction(function () use ($request, &$data) {
             $data->update($request->input());
-            $data->navigations()->delete();
-            if ($request->input('navigations')) {
-                $navigations = explode(',', $request->input('navigations'));
-                $pinyin = new Pinyin();
-                $navigationsArray = array_map(function ($v) use ($pinyin) {
-                    $pinyiName = $pinyin->sentence($v);
-                    $pinyiName = str_replace(' ', '', $pinyiName);
-                    return ['name' => $v, 'pinyin' => $pinyiName];
-                }, $navigations);
-                $data->navigations()->createMany($navigationsArray);
+            $dbNavNameString = implode(',', $data->navigations()->pluck('name')->all());
+            // request栏目 与数据库的不一致
+            if ($dbNavNameString != $request->input('navigations')) {
+                $data->navigations()->delete();
+                if ($request->input('navigations')) {
+                    $navigations = explode(',', $request->input('navigations'));
+                    $pinyin = new Pinyin();
+                    $navigationsArray = array_map(function ($v) use ($pinyin) {
+                        $pinyiName = $pinyin->sentence($v);
+                        $pinyiName = str_replace(' ', '', $pinyiName);
+                        return ['name' => $v, 'pinyin' => $pinyiName];
+                    }, $navigations);
+                    $data->navigations()->createMany($navigationsArray);
+                }
             }
         });
         return $data->load('template', 'navigations');
