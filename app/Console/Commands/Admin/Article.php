@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Admin;
 
+use App\Help\scws\PSCWS4;
 use App\Models\Wechat;
 use App\Services\Admin\IdataApiService;
 use Illuminate\Console\Command;
@@ -112,6 +113,29 @@ class Article extends Command
         });
     }
 
+    /**
+     * 分词
+     * @return array
+     */
+    protected function makeArticleScws(){
+        $pscws = new PSCWS4('utf8');
+        $pscws->set_charset('utf-8');
+        $pscws->set_dict(public_path().'/dict.utf8.xdb');
+        $pscws->set_rule(public_path().'/rules.ini');
+
+        //使用：
+        $pscws->send_text("端午节是一个非常经典的传统节日");
+        $article = [];
+        while ($some = $pscws->get_result())
+        {
+            foreach ($some as $word)
+            {
+                $article[] = $word['word'];
+            }
+        }
+        $pscws->close();
+        return $article;
+    }
     /**
      * 测试数据
      * @return array
