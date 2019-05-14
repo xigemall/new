@@ -125,6 +125,11 @@ class TemplateDetailController extends Controller
         $column->row('文章列表循环end：  @endforeach');
         $column->row('<br/>');
 
+        // 文章分页
+        $column->row('文章分页');
+        $column->row('文章分页：  {{ $articles->links() }}');
+        $column->row('<br/>');
+
         //广告
         $column->row('广告');
         $column->row('广告列表[]：  {{$advertisings}}');
