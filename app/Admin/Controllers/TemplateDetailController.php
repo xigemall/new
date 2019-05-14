@@ -95,7 +95,7 @@ class TemplateDetailController extends Controller
         $column->row('栏目名称：  {{$navigation->id}}');
         $column->row('<br/>');
 
-        // 文章
+        // 文章列表
         $column->row('文章列表：  {{$articles}}');
         $column->row('文章列表循环start：  @foreach($articles as $v)');
 
@@ -128,6 +128,13 @@ class TemplateDetailController extends Controller
         // 文章分页
         $column->row('文章分页');
         $column->row('文章分页：  {{ $articles->links() }}');
+        $column->row('<br/>');
+
+        // 文章详情
+        $column->row('文章详情');
+        $column->row('文章详情：  {{$article}}');
+        $column->row('上一篇详情地址：  {{asset($navigation->pinyin."/".$prev->id)}}');
+        $column->row('下一篇详情地址：  {{asset($navigation->pinyin."/".$next->id)}}');
         $column->row('<br/>');
 
         //广告
