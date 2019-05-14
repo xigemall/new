@@ -12,3 +12,5 @@
 */
 
 Route::get('/', 'IndexController@index');
+Route::get('/{pinyin}', 'IndexController@getList');
+Route::get('/{pinyin}/{id}', 'IndexController@getDetail');
