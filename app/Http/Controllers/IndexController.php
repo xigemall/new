@@ -100,6 +100,8 @@ class IndexController extends Controller
         $recommendArticles = $this->site->getRecommendArticles($site->id, $navigation->id);
         //热门文章
         $hots = $this->site->getHotArticles($site->id, $navigation->id);
+        // 获取tag
+        $tags = $this->site->getTags($site->id);
         $data = [
             'static' => asset($site->template->file),
             'site' => $site,
@@ -111,6 +113,7 @@ class IndexController extends Controller
             'articles' => $articles,
             'recommends' => $recommendArticles,
             'hots' => $hots,
+            'tags' => $tags,
         ];
         return view($site->template->id . '.list')->with($data);
     }
@@ -150,6 +153,8 @@ class IndexController extends Controller
         $recommendArticles = $this->site->getRecommendArticles($site->id, $navigation->id);
         //热门文章
         $hots = $this->site->getHotArticles($site->id, $navigation->id);
+        // 获取tag
+        $tags = $this->site->getTags($site->id);
         // 上一篇
         $prevArticle = Article::where(['site_id' => $site->id, 'navigation_id' => $navigation->id])->where('id','<',$id)->orderBy('id','desc')->limit(1)->first();
         // 下一篇
@@ -165,6 +170,7 @@ class IndexController extends Controller
             'article' => $article,
             'recommends' => $recommendArticles,
             'hots' => $hots,
+            'tags' => $tags,
             'prev'=>$prevArticle,
             'next'=>$nextArticle,
         ];

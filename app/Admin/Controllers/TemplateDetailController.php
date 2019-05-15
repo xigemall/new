@@ -170,6 +170,13 @@ class TemplateDetailController extends Controller
         $column->row('热门文章列表[]：  {{$hots}}');
         $column->row('<br/>');
 
+        //标签
+        $column->row('标签');
+        $column->row('标签列表[]：  {{$tags}}');
+        $column->row('标签文章ID：  {{$v->article_id}}');
+        $column->row('标签名称：  {{$v->name}}');
+        $column->row('<br/>');
+
     }
 
     protected function showCreate()

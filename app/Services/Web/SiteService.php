@@ -9,6 +9,7 @@ use App\Models\AdvertisingSite;
 use App\Models\Article;
 use App\Models\Blogroll;
 use App\Models\BlogrollSite;
+use App\Models\Tag;
 
 class SiteService
 {
@@ -73,5 +74,17 @@ class SiteService
     {
         $articles = Article::where(['site_id' => $siteId, 'navigation_id' => $navigationId])->orderBy('view_count', 'desc')->limit(5)->get();
         return $articles;
+    }
+
+    /**
+     * 获取tags
+     * @param int $siteId
+     * @return mixed
+     */
+    public function getTags(int $siteId)
+    {
+        $articleId = Article::where(['site_id' => $siteId])->pluck('id')->all();
+        $data = Tag::whereIn('article_id', $articleId)->inRandomOrder()->limit(20)->get();
+        return $data;
     }
 }
