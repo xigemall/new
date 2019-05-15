@@ -38,4 +38,9 @@ class Article extends Model
     {
         return $this->belongsTo(Navigation::class);
     }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 }

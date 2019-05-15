@@ -4,10 +4,12 @@ namespace App\Console\Commands\Admin;
 
 use App\Help\scws\PSCWS4;
 use App\Models\Wechat;
+use App\Services\Admin\ArticleService;
 use App\Services\Admin\IdataApiService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Tests\Models\Tag;
 
 class Article extends Command
 {
@@ -27,15 +29,18 @@ class Article extends Command
 
     protected $idata;
 
+    protected $articleService;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(IdataApiService $idataApiService)
+    public function __construct(IdataApiService $idataApiService, ArticleService $articleService)
     {
         parent::__construct();
         $this->idata = $idataApiService;
+        $this->articleService = $articleService;
     }
 
     /**
@@ -107,35 +112,16 @@ class Article extends Command
                 $article->save();
                 $wechat->increment('collect_num');
                 $wechat->save();
+                // tags保存
+                $scws = $this->articleService->getArticleScws($article->title);
+                $this->articleService->makeTags($scws, $article);
 
                 $pageToken = $pageToken + 1;
             }
         });
     }
 
-    /**
-     * 分词
-     * @return array
-     */
-    protected function makeArticleScws(){
-        $pscws = new PSCWS4('utf8');
-        $pscws->set_charset('utf-8');
-        $pscws->set_dict(public_path().'/dict.utf8.xdb');
-        $pscws->set_rule(public_path().'/rules.ini');
 
-        //使用：
-        $pscws->send_text("端午节是一个非常经典的传统节日");
-        $article = [];
-        while ($some = $pscws->get_result())
-        {
-            foreach ($some as $word)
-            {
-                $article[] = $word['word'];
-            }
-        }
-        $pscws->close();
-        return $article;
-    }
     /**
      * 测试数据
      * @return array
