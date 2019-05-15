@@ -48,7 +48,7 @@ class SiteService
      */
     public function getNavigationArticles(int $navigationId, int $siteId)
     {
-        $navigationArticles = Article::where(['site_id' => $siteId, 'navigation_id' => $navigationId])->paginate(10);
+        $navigationArticles = Article::where(['site_id' => $siteId, 'navigation_id' => $navigationId])->orderBy('id', 'desc')->paginate(10);
         return $navigationArticles;
     }
 
