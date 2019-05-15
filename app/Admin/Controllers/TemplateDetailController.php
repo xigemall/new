@@ -62,6 +62,7 @@ class TemplateDetailController extends Controller
         $column->row('<br/>');
 
         $column->row('网站');
+        $column->row("网站首页：  {{url('/')}}");
         $column->row('网站标题：  {{$site->title}}');
         $column->row('网站描述：  {{$site->description}}');
         $column->row('网站关键字：  {{$site->keyword}}');
@@ -93,7 +94,7 @@ class TemplateDetailController extends Controller
         $column->row('列表、详情栏目{}：  {{$navigation}}');
         $column->row('栏目拼音：  {{$navigation->pinyin}}');
         $column->row('栏目ID：  {{$navigation->id}}');
-        $column->row('栏目名称：  {{$navigation->id}}');
+        $column->row('栏目名称：  {{$navigation->name}}');
         $column->row('<br/>');
 
         // 文章列表
