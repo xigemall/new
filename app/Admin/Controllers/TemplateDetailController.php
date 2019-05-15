@@ -61,6 +61,7 @@ class TemplateDetailController extends Controller
         $column->row('静态文件路径demo：  {{$static}}/style/font/reset.css');
         $column->row('<br/>');
 
+        $column->row('网站');
         $column->row('网站标题：  {{$site->title}}');
         $column->row('网站描述：  {{$site->description}}');
         $column->row('网站关键字：  {{$site->keyword}}');
@@ -82,7 +83,7 @@ class TemplateDetailController extends Controller
         //栏目列表
         $column->row('栏目');
         $column->row('栏目[]：  {{$navigations}}');
-        $column->row('栏目url：  {{asset($v->pinyin)}}');
+        $column->row('栏目url：  {{asset($v->pinyin)}} 或者 {{url($v->pinyin)}}');
         $column->row('栏目名称：  {{$v->name}');
         $column->row('<br/>');
 
@@ -101,6 +102,7 @@ class TemplateDetailController extends Controller
 
         $column->row('详情地址：  {{asset($navigation->pinyin."/".$v->id)}}');
         $column->row('标题：  {{$v->title)}}');
+        $column->row('微信名称：  {{$v->name)}}');
         $column->row('观看数：  {{$v->view_count)}}');
         $column->row('正文：  {{$v->content)}}');
         $column->row('正文html：  {{$v->html)}}');
@@ -110,8 +112,11 @@ class TemplateDetailController extends Controller
         $column->row('音频链接列表demo： [audio1,audio1]');
         $column->row('视频链接列表：  {{$v->video_urls)}}');
         $column->row('视频链接列表demo： [video,video]');
+        $column->row('创建时间： {{$v->created_at');
+
+        $column->row('<br/>');
         $column->row('评论列表：  {{$v->comments)}}');
-        $column->row('评论列表demo[]： ');
+        $column->row('评论列表demo[]： @foreach');
         $column->row('文章id：  {{$v->id}}');
         $column->row('点赞数：  {{$v->likeCount}}');
         $column->row('评论的回复列表：  {{$v->replies}}');
@@ -121,6 +126,8 @@ class TemplateDetailController extends Controller
         $column->row('评论者名称：  {{$v->commenterScreenName}}');
         $column->row('评论数：  {{$v->commentCount}}');
         $column->row('相关物图片url：  {{$v->avatarUrl}}');
+        $column->row('评论列表demo[]： @endforeach');
+        $column->row('<br/>');
 
         $column->row('文章列表循环end：  @endforeach');
         $column->row('<br/>');
