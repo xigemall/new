@@ -124,6 +124,7 @@ class IndexController extends Controller
      */
     public function getDetail(Request $request, $pinyin, $id)
     {
+        $id = str_replace('.html', '', $id);
         //当前域名
         $domain = $request->server('HTTP_HOST');
         $domain = 'http://' . $domain;
