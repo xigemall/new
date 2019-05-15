@@ -30,6 +30,8 @@ class ArticleService
      */
     public function getArticleScws($title)
     {
+        $arr = [',', '，', '。', '.', '/', '?', '？', ';', '；', ':', '：', "'", "‘", '"', '“', '”', '[', '【', ']', '】', '{', '}', '|', '`', '·', '~', '!', '！', '@', '#', '￥', '$', '%', '……', '^', '^', '&', '*', '（', '）', '(', ')', '-', '_', '——', '=', '+'];
+        $title = str_replace($arr, '', $title);
         $pscws = new PSCWS4('utf8');
         $pscws->set_charset('utf-8');
         $pscws->set_dict(app_path('Help/scws/dict.utf8.xdb'));
