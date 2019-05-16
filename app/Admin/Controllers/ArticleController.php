@@ -38,6 +38,7 @@ class ArticleController extends Controller
     protected function getGridList()
     {
         $grid = new Grid(new Article());
+        $grid->id('ID');
         $grid->title('标题');
         $grid->site()->title('所属网站');
         $grid->navigation()->name('所属栏目');
@@ -91,7 +92,9 @@ class ArticleController extends Controller
     {
         $form = new Form(Article::findOrFail($id));
         $data = Site::select('id', 'title')->get();
+//        $form->text('title','文章标题')->default($form->model()->title)->required();
         $form->html(view('admin.article.edit', ['data' => $form->model(), 'site' => $data]));
+//        $form->textarea('content','文章正文')->default($form->model()->content)->rows(20);
         return $form;
     }
 
@@ -107,6 +110,8 @@ class ArticleController extends Controller
         $message = [
             'site_id' => '网站',
             'navigation_id' => '栏目',
+            'title' => '文章标题',
+            'content' => '文章正文',
         ];
         $this->validate($request, [
             'site_id' => [
@@ -114,7 +119,15 @@ class ArticleController extends Controller
             ],
             'navigation_id' => [
                 Rule::exists('navigations', 'id')->where('site_id', $request->input('site_id')),
-            ]
+            ],
+//            'title'=>[
+//                'required',
+//                'string',
+//                'max:255'
+//            ],
+//            'content'=>[
+//                'string',
+//            ],
         ], [], $message);
 
         $article = Article::findOrFail($id);
