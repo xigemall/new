@@ -10,7 +10,7 @@ Route::group([
     'middleware'    => config('admin.route.middleware'),
 ], function (Router $router) {
 
-    $router->get('/', 'HomeController@index')->name('admin.home');
+    $router->get('/index', 'HomeController@index')->name('admin.home');
 
     // 模板
     $router->resource('template', 'TemplateController');
