@@ -11,16 +11,23 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticleService
 {
+    protected $curl;
+
+    public function __construct(Curl $curl)
+    {
+        $this->curl = $curl;
+    }
+
     /**
      *保存文章  （通过api获取微信文章）
      */
     public function makeWechatArticle()
     {
         $data = Wechat::get();
-        foreach ($data as $k=> $v){
+        foreach ($data as $k => $v) {
             Artisan::call('article:create', [
-                'id'=>$v->id,
-                'wechat_num'=>$v->wechat_num
+                'id' => $v->id,
+                'wechat_num' => $v->wechat_num
             ]);
         }
     }
