@@ -104,7 +104,7 @@ class Article extends Command
                 $article->view_count = 0;
                 $article->content = $apiArticle['content'];
                 $article->html = $apiArticle['html'];
-                $article->image_urls = $apiArticle['imageUrls'];
+                $article->image_urls = $this->articleService->getImage($apiArticle['imageUrls']);
                 $article->audio_urls = $apiArticle['audioUrls'];
                 $article->video_urls = $apiArticle['videoUrls'];
                 if ($apiArticle['commentCount']) {

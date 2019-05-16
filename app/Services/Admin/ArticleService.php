@@ -7,6 +7,7 @@ namespace App\Services\Admin;
 use App\Help\scws\PSCWS4;
 use App\Models\Wechat;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleService
 {
@@ -62,5 +63,28 @@ class ArticleService
         $article->tags()->createMany($data);
     }
 
+    /**
+     * 获取文章imageUrls文件资源
+     * @param array $imageUrls
+     * @return array
+     */
+    public function getImage(array $imageUrls)
+    {
+        $path = 'article';
+        if (!Storage::disk('admin')->exists($path)) {
+            Storage::disk('admin')->makeDirectory($path);
+        }
+        $name = date('YmdHis') . str_random(8);
+        $newImageUrls = [];
+        foreach ($imageUrls as $k => $v) {
+            $imageUrl = $v;
+            $result = $this->curl->get($imageUrl);
+            $newName = $path . '/' . $name . $k . '.jpg';
+            Storage::disk('admin')->put($newName, $result);
+            $url = '/uploads/' . $newName;
+            $newImageUrls[] = $url;
+        }
+        return $newImageUrls;
+    }
 
 }
