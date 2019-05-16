@@ -150,6 +150,7 @@ class IndexController extends Controller
         // 获取文章
         $article = Article::findOrFail($id);
         $article->increment('view_count');
+        $article->image_urls = array_random($article->image_urls, 1)[0];
         // 推荐文章
         $recommendArticles = $this->site->getRecommendArticles($site->id, $navigation->id);
         //热门文章
