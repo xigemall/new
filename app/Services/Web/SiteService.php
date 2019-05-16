@@ -84,7 +84,7 @@ class SiteService
     public function getTags(int $siteId)
     {
         $articleId = Article::where(['site_id' => $siteId])->pluck('id')->all();
-        $data = Tag::whereIn('article_id', $articleId)->inRandomOrder()->limit(20)->get();
+        $data = Tag::whereIn('article_id', $articleId)->inRandomOrder()->limit(10)->get();
         return $data;
     }
 }
