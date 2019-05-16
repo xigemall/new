@@ -100,7 +100,8 @@ class Article extends Command
                 $article->navigation_id = $wechat->navigation_id;
                 $article->wechat_article_id = $apiArticle['id'];
                 $article->title = $apiArticle['title'];
-                $article->view_count = $apiArticle['viewCount'] ? $apiArticle['viewCount'] : 0;
+//                $article->view_count = $apiArticle['viewCount'] ? $apiArticle['viewCount'] : 0;
+                $article->view_count = 0;
                 $article->content = $apiArticle['content'];
                 $article->html = $apiArticle['html'];
                 $article->image_urls = $apiArticle['imageUrls'];

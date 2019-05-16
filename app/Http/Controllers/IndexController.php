@@ -149,6 +149,7 @@ class IndexController extends Controller
         $blogrolls = $this->site->getBlogroll($site->id);
         // 获取文章
         $article = Article::findOrFail($id);
+        $article->increment('view_count');
         // 推荐文章
         $recommendArticles = $this->site->getRecommendArticles($site->id, $navigation->id);
         //热门文章
