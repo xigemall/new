@@ -26,6 +26,7 @@ class IndexController extends Controller
         $domain = 'http://' . $domain;
         // 网站
         $site = Site::where('domain', $domain)->first();
+        abort_if(!$site, 404, '该网站不存在');
         $site->increment('visit');
 
 //        \View::addExtension('html', 'php');
@@ -158,9 +159,9 @@ class IndexController extends Controller
         // 获取tag
         $tags = $this->site->getTags($site->id);
         // 上一篇
-        $prevArticle = Article::where(['site_id' => $site->id, 'navigation_id' => $navigation->id])->where('id','<',$id)->orderBy('id','desc')->limit(1)->first();
+        $prevArticle = Article::where(['site_id' => $site->id, 'navigation_id' => $navigation->id])->where('id', '<', $id)->orderBy('id', 'desc')->limit(1)->first();
         // 下一篇
-        $nextArticle = Article::where(['site_id' => $site->id, 'navigation_id' => $navigation->id])->where('id','>',$id)->orderBy('id','asc')->limit(1)->first();
+        $nextArticle = Article::where(['site_id' => $site->id, 'navigation_id' => $navigation->id])->where('id', '>', $id)->orderBy('id', 'asc')->limit(1)->first();
         $data = [
             'static' => asset($site->template->file),
             'site' => $site,
@@ -173,8 +174,8 @@ class IndexController extends Controller
             'recommends' => $recommendArticles,
             'hots' => $hots,
             'tags' => $tags,
-            'prev'=>$prevArticle,
-            'next'=>$nextArticle,
+            'prev' => $prevArticle,
+            'next' => $nextArticle,
         ];
         return view($site->template->id . '.detail')->with($data);
 
