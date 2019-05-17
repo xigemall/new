@@ -10,5 +10,6 @@ class Navigation extends Model
         'name',
         'pinyin',
         'site_id',
+        'sort',
     ];
 }

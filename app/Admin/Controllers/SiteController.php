@@ -124,7 +124,7 @@ class SiteController extends Controller
             ->required()
             ->default($form->model()->template_id);
         // 关联栏目
-        $navigations = implode(',', $form->model()->navigations()->pluck('name')->all());
+        $navigations = implode(',', $form->model()->navigations()->orderBy('sort', 'asc')->pluck('name')->all());
         $form->text('navigations', '网站栏目')->required()->default($navigations);
 
         return $form;

@@ -18,6 +18,7 @@ class CreateNavigationsTable extends Migration
             $table->increments('id');
             $table->char('name',50)->comment('栏目名称')->defaullt('');
             $table->char('pinyin', 100)->comment('栏目名称拼音')->defaullt('');
+            $table->unsignedTinyInteger('sort')->comment('栏目排序')->default(0);
             $table->unsignedBigInteger('site_id')->comment('网站ID')->index();
             $table->timestamps();
         });

@@ -4,6 +4,7 @@
 namespace App\Services\Admin;
 
 
+use App\Models\Navigation;
 use App\Models\Site;
 use Encore\Admin\Grid;
 use Illuminate\Support\Facades\DB;
@@ -57,11 +58,12 @@ class SiteService
             if ($request->input('navigations')) {
                 $navigations = explode(',', $request->input('navigations'));
                 $pinyin = new Pinyin();
-                $navigationsArray = array_map(function ($v) use ($pinyin) {
+                $navigationsArray = [];
+                foreach ($navigations as $k => $v) {
                     $pinyiName = $pinyin->sentence($v);
                     $pinyiName = str_replace(' ', '', $pinyiName);
-                    return ['name' => $v, 'pinyin' => $pinyiName];
-                }, $navigations);
+                    $navigationsArray[] = ['name' => $v, 'pinyin' => $pinyiName, 'sort' => $k];
+                }
                 $data->navigations()->createMany($navigationsArray);
             }
 
@@ -87,27 +89,40 @@ class SiteService
         return $data->load('template', 'navigations');
     }
 
+    /**
+     * 编辑修改栏目
+     * @param $request
+     * @param $site
+     */
     protected function makeNavigations($request, $site)
     {
         $requestNavigationArray = explode(',', $request->input('navigations'));
         $dbNavigationArray = $site->navigations()->pluck('name')->all();
-        $addNavigations = array_diff($requestNavigationArray, $dbNavigationArray);
-        $delNavigations = array_diff($dbNavigationArray, $requestNavigationArray);
 
-        if ($addNavigations) {
-            $pinyin = new Pinyin();
-            $navigationsArray = array_map(function ($v) use ($pinyin) {
-                $pinyiName = $pinyin->sentence($v);
-                $pinyiName = str_replace(' ', '', $pinyiName);
-                return ['name' => $v, 'pinyin' => $pinyiName];
-            }, $addNavigations);
-            $site->navigations()->createMany($navigationsArray);
+        //删除的
+        $delNavigations = [];
+        foreach ($dbNavigationArray as $v) {
+            if (!in_array($v, $requestNavigationArray)) {
+                $delNavigations[] = $v;
+            }
         }
 
         if ($delNavigations) {
             $site->navigations()->whereIn('name', $delNavigations)->delete();
         }
 
+        // 添加与编辑
+        $pinyin = new Pinyin();
+        foreach ($requestNavigationArray as $k => $v) {
+            if (!in_array($v, $dbNavigationArray)) {
+                $pinyiName = $pinyin->sentence($v);
+                $pinyiName = str_replace(' ', '', $pinyiName);
+                $data = ['name' => $v, 'pinyin' => $pinyiName, 'sort' => $k, 'site_id' => $site->id];
+                Navigation::create($data);
+            } else {
+                Navigation::where(['site_id' => $site->id, 'name' => $v])->update(['sort' => $k]);
+            }
+        }
     }
 
     /**
