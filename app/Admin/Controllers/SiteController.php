@@ -32,8 +32,6 @@ class SiteController extends Controller
         $content->header('网站');
         $content->body($this->site->grid());
         return $content;
-//        $data = Site::with(['navigations'])->get();
-//        return response()->json($data, 200);
     }
 
     /**
@@ -75,7 +73,6 @@ class SiteController extends Controller
     public function store(SiteRequest $request)
     {
         $data = $this->site->store($request);
-//        return response()->json($data, 201);
     }
 
     /**
