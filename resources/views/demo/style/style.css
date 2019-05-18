@@ -1,0 +1,601 @@
+body {
+    border-top: 4px solid #005baa;
+}
+
+.new-nav-box {
+    width: 1220px;
+    height: 50px;
+    margin: 15px auto 0;
+}
+
+.new-nav-logo-box {
+    height: 50px;
+}
+
+.new-nav-logo {
+    line-height: 42px;
+    color: #1e68ac;
+    font-size: 33px;
+}
+
+.new-nav-seek {
+    float: right;
+}
+
+.new-nav-seek input {
+    width: 280px;
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid #cccccc;
+    border-radius: 6px 0 0 6px;
+}
+
+.new-nav-seek i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: right;
+    width: 68px;
+    height: 42px;
+    color: #ffffff;
+    border-radius: 0 6px 6px 0;
+    background-color: #1e68ac;
+    font-size: 24px;
+}
+
+/*PC列表*/
+.new-content-box {
+    display: table;
+    width: 1220px;
+    margin: 0 auto;
+    padding-top: 32px;
+}
+
+.list-box {
+    float: left;
+    width: 800px;
+}
+
+.list-box-msg {
+    border: 1px solid #d9d9d9;
+}
+
+.list-box-msg > span {
+    display: block;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 17px;
+    border-bottom: 1px solid #d9d9d9;
+    color: #808080;
+    font-size: 16px;
+}
+
+.list-box-msg h3 {
+    line-height: 30px;
+    margin: 12px 17px 27px;
+    border-bottom: 1px dashed #d9d9d9;
+    color: #333333;
+    font-size: 24px;
+}
+
+.list-box-msg h3 p {
+    color: #808080;
+    font-size: 16px;
+    text-align: right;
+}
+
+.list-box-msg dl dd {
+    line-height: 33px;
+    padding: 0 17px;
+    margin-bottom: 120px;
+    color: #808080;
+    text-indent: 2em;
+    font-size: 16px;
+}
+
+.list-box-msg div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 57px;
+    color: #808080;
+    font-size: 22px;
+    text-align: center;
+}
+
+.list-box-msg div span {
+    padding: 5px;
+    margin-right: 15px;
+    border: 1px solid #d9d9d9;
+}
+
+.list-box-msg > p {
+    padding: 0 17px;
+    color: #808080;
+    font-size: 16px;
+}
+
+.list-box-msg > p span {
+    color: #333333;
+}
+
+.list-box-msg > ul {
+    text-align: right;
+    padding: 50px 17px 200px 0 !important;
+}
+
+.list-box-msg > ul > li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: right;
+    width: 30px;
+    height: 30px !important;
+    padding: 0 !important;
+    margin: 0 10px 0 0 !important;
+    border: none !important;
+}
+
+.list-box-msg > ul > li > i {
+    font-size: 30px;
+}
+
+.list-box-msg-page {
+    justify-content: space-between !important;
+    height: 50px;
+    padding: 0 17px;
+    margin: 0 !important;
+    border-top: 1px solid #d9d9d9;
+
+}
+
+.list-box-msg-page a {
+    color: #808080;
+    font-size: 16px;
+}
+
+.new-nav {
+    display: -webkit-box;
+    width: 100%;
+}
+
+.new-nav li {
+    float: left !important;
+    height: 42px !important;
+    line-height: 42px;
+    padding: 0 10px !important;
+    border: none !important;
+}
+
+.new-nav li a:hover, .new-nav li a.active {
+    color: #005baa;
+    font-weight: 600;
+}
+
+.list-box ul li {
+    position: relative;
+    height: 154px;
+    padding: 20px;
+    margin-bottom: 18px;
+    border: 1px solid #e6e6e6;
+}
+
+.list-box ul li h3 {
+    margin-bottom: 17px;
+    color: #333333;
+    font-size: 22px;
+    overflow: hidden; /*超出长度的文字隐藏*/
+    text-overflow: ellipsis; /*文字隐藏以后添加省略号*/
+    white-space: nowrap; /*强制不换行*/
+}
+
+.list-box ul li img {
+    float: left;
+    width: 150px;
+    height: 120px;
+    margin-right: 23px;
+}
+
+.list-msg-box {
+    position: relative;
+    float: left;
+    width: 570px;
+    height: 120px;
+    overflow: hidden; /*超出长度的文字隐藏*/
+}
+
+.list-msg-box span {
+    display: -webkit-box;
+    line-height: 24px;
+    color: #808080;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    white-space: normal !important;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.list-msg-box time {
+    position: absolute;
+    bottom: 0;
+    color: #808080;
+    font-size: 16px;
+}
+
+.list-bottom-msg {
+    position: absolute;
+    bottom: 20px;
+    width: calc(100% - 20px * 2);
+    height: 20px;
+}
+
+.list-bottom-msg i {
+    margin-right: 12px;
+    font-size: 21px;
+}
+
+.list-bottom-msg time, .list-bottom-msg span {
+    margin-right: 50px;
+    color: #808080;
+    font-size: 16px;
+}
+
+.more-msg {
+    float: right;
+    margin-right: 0 !important;
+}
+
+/*分页*/
+.first-page, .last-page {
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    color: #d9d9d9;
+    border: 1px solid #d9d9d9;
+    font-size: 22px;
+}
+
+.new-page ul li {
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    color: #d9d9d9;
+    font-size: 22px;
+}
+
+.new-page ul li:hover {
+    border: none;
+    color: #666666;
+}
+
+.new-page ul li.active {
+    border: none;
+    color: #666666;
+}
+
+/*推荐列表*/
+.recommend-list-box {
+    float: right;
+    width: 370px;
+    margin-bottom: 2px;
+    border: 1px solid #e6e6e6;
+    border-bottom: none;
+}
+
+.min-head {
+    display: flex;
+    align-items: center;
+    height: 28px;
+    padding: 0 16px;
+    background: #f1f1f1;
+    color: #333333;
+    font-size: 22px;
+}
+
+.min-head i {
+    margin-right: 7px;
+    font-size: 22px;
+}
+
+.recommend-list-msg {
+    display: inline-block;
+}
+
+.recommend-list-msg li {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 340px;
+    padding: 15px;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.recommend-list-msg li img {
+    float: left;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.recommend-list-right {
+    position: relative;
+    float: right;
+    width: 248px;
+}
+
+.recommend-list-right span {
+    display: -webkit-box;
+    color: #808080;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    white-space: normal !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.recommend-list-right time {
+    position: absolute;
+    bottom: 0;
+    color: #808080;
+    font-size: 14px;
+}
+
+.recommend-list-bottom-msg {
+    color: #808080;
+    font-size: 14px;
+}
+
+/*底部版权*/
+.new-foot-box {
+    margin-top: 120px;
+    padding-top: 21px;
+    background: #333333;
+    text-align: center;
+}
+
+.new-foot-msg {
+    width: 1220px;
+    height: 139px;
+    margin: 0 auto;
+}
+
+.new-foot-msg ul li {
+    float: left;
+    width: 33.33%;
+}
+
+.new-foot-msg ul li h5 {
+    margin-bottom: 10px;
+    color: #d9d9d9;
+    font-size: 20px;
+}
+
+.new-foot-msg ul li p {
+    margin-top: 9px;
+    color: #808080;
+    font-size: 14px;
+}
+
+/*手机版本导航*/
+.wap-nav-box {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    width: 7.5rem;
+    height: 1rem;
+    border-bottom: solid 1px #d9d9d9;
+}
+
+.wap-nav-box a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    color: #000000;
+    font-size: .4rem;
+    text-decoration: none;
+}
+
+.wap-nav-box .wap-log {
+    color: #0090ce;
+    font-size: .35rem;
+    font-weight: 700;
+}
+
+.wap-nav-box i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    color: #808080;
+    font-size: .32rem;
+    font-weight: 600;
+}
+
+/*H5导航展开*/
+.wap-nav-seek {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 2;
+}
+
+.wap-nav-seek input {
+    float: left;
+    width: 65%;
+    height: .5rem;
+    margin: .5rem .7rem 0 .2rem;
+    padding: 0 .3rem;
+    border: 1px solid #cccccc;
+    border-radius: .2rem;
+}
+
+.wap-nav-seek > i {
+    float: left;
+    margin: .6rem 0 0 0;
+    font-size: .4rem;
+}
+
+.wap-nav-list {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 2;
+}
+
+wap-nav-list ul a {
+    text-decoration: none;
+}
+
+.wap-nav-list li {
+    padding: .3rem .19rem;
+}
+
+.wap-nav-list li.wap-nav-list-top, .wap-nav-list-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 1rem;
+    padding: 0 .19rem;
+
+}
+
+@media screen and (max-width: 750px) {
+    body {
+        min-width: 7.5rem
+    }
+
+    .new-nav-box {
+        display: none;
+    }
+
+    .wap-nav-box {
+        display: flex;
+    }
+
+    /*内容*/
+    .new-nav {
+        display: none;
+    }
+
+    .new-content-box {
+        width: 7.5rem;
+        margin: 0;
+        padding-top: .18rem;
+    }
+
+    .list-box ul li {
+        height: 1.7rem;
+        padding: .2rem;
+        margin-bottom: .18rem;
+    }
+
+    .list-box ul li img {
+        width: 1.6rem;
+        height: 1.2rem;
+        margin-right: .23rem;
+    }
+
+    .list-msg-box {
+        width: 4.71rem;
+        height: 1.2rem;
+    }
+
+    .list-msg-box h3 {
+        width: 4.71rem;
+        margin-bottom: .17rem;
+        font-size: .22rem;
+    }
+
+    .list-msg-box span {
+        line-height: .24rem;
+        font-size: .16rem;
+    }
+
+    .list-box {
+        width: 7.5rem;
+    }
+
+    .list-bottom-msg {
+        display: none;
+    }
+
+    /*分页*/
+    .first-page, .last-page {
+        width: .34rem;
+        height: .34rem;
+        font-size: .22rem;
+    }
+
+    .new-page ul li {
+        width: .34rem;
+        height: .34rem;
+        padding: 0;
+        color: #d9d9d9;
+        font-size: .22rem;
+    }
+
+    /*推荐列表*/
+    .recommend-list-box {
+        display: none;
+    }
+
+    /*底部版权--关闭*/
+    .new-foot-box {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 510px) {
+    .list-box-msg > span {
+        font-size: .16rem;
+    }
+
+    .list-box-msg h3 {
+        font-size: .24rem;
+    }
+
+    .list-box-msg h3 p {
+        font-size: .16rem;
+    }
+
+    .list-box-msg dl dd {
+        margin-bottom: 0;
+        font-size: .16rem;
+    }
+
+    .list-box-msg div {
+        padding: .28rem 0;
+        margin-bottom: 0;
+        font-size: .22rem;
+    }
+
+    .list-box-msg > p {
+        font-size: .16rem;
+    }
+
+    .list-box-msg > ul {
+        display: none;
+    }
+
+    .list-box-msg-page a {
+        font-size: .16rem;
+    }
+}

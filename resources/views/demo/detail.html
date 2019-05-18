@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{$site->title}}</title>
+    <link rel="stylesheet" href="{{$static}}/style/font/reset.css">
+    <link rel="stylesheet" href="{{$static}}/style/style.css">
+</head>
+<body>
+<div class="new-nav-box">
+    <div class="new-nav-logo-box">
+        <span class="new-nav-logo">新闻博客</span>
+        <div class="new-nav-seek">
+            <input type="text" placeholder="请输入你要的内容">
+            <i class="icon iconfont icon-sousuo"></i>
+        </div>
+    </div>
+</div>
+<div class="wap-nav-box">
+    <a href="#" class="icon iconfont icon-liebiao wap-nav-icon"></a>
+    <div class="wap-log">新闻博客</div>
+    <i class="icon iconfont icon-sousuo seek"></i>
+</div>
+<div class="wap-nav-seek">
+    <ul>
+        <li class="wap-nav-list-top">
+            <i class="icon iconfont icon-zuo home"></i>
+            <span>新闻博客主页</span>
+            <span></span>
+        </li>
+    </ul>
+    <input type="text" placeholder="请输入关键字">
+    <i class="icon iconfont icon-sousuo go-seek"></i>
+</div>
+<div class="wap-nav-list">
+    <ul>
+        <li class="wap-nav-list-top">
+            <i class="icon iconfont icon-zuo home"></i>
+            <span>新闻博客主页</span>
+            <span></span>
+        </li>
+        <a href="#">
+            <li>首页</li>
+        </a>
+        <a href="#">
+            <li>临江市</li>
+        </a>
+        <a href="#">
+            <li>抚松县</li>
+        </a>
+        <a href="#">
+            <li>江源区</li>
+        </a>
+        <a href="#">
+            <li>靖宇县</li>
+        </a>
+        <a href="#">
+            <li>八道江区</li>
+        </a>
+        <a href="#">
+            <li>长白朝鲜族自治县</li>
+        </a>
+    </ul>
+</div>
+<div class="new-content-box">
+    <div class="list-box list-box-msg">
+        <span>当前位置：<a href="{{url('/')}}">主页</a> > <a href="{{asset($navigation->pinyin)}}">{{$navigation->name}}</a> > 正文</span>
+        <h3>
+            {{$article->title}}
+            <p>{{substr($article->created_at,0,10)}} {{$navigation->name}}</p>
+        </h3>
+        <dl>
+            <dd>
+                {{$article->content}}
+            </dd>
+        </dl>
+        <div>
+            标签：
+            @foreach($tags as $v)
+            <a href="{{url($navigation->pinyin.'/'.$v->article_id.'.html')}}">
+                <span>{{$v->name}}</span>
+            </a>
+
+            @endforeach
+        </div>
+        <p>
+            <span>版权保护:</span> 本文由 测试 原创，转载请保留链接: http://www.7.com/linjiangshi/5449.html
+        </p>
+        <ul>
+            <li><i class="icon iconfont icon-yduixinlangweibo" style="color: #d80000;"></i></li>
+            <li><i class="icon iconfont icon-renren" style="color: #005baa"></i></li>
+            <li><i class="icon iconfont icon-qunfengqqkongjian" style="color: #f5c01c"></i></li>
+            <li><i class="icon iconfont icon-weixin-copy" style="color: #79d69c"></i></li>
+            <li><i class="icon iconfont icon-yduitengxunweibo" style="color: #368bcc"></i></li>
+        </ul>
+        <div class="list-box-msg-page">
+            @if($prev)
+            <a href="{{url($navigation->pinyin.'/'.$prev->id)}}">上一篇:{{str_limit($prev->title,20)}}</a>
+            @else
+            <a href="#">上一篇:没有了</a>
+            @endif
+
+            @if($next)
+            <a href="{{url($navigation->pinyin.'/'.$next->id)}}">下一篇：{{str_limit($next->title,20)}}</a>
+            @else
+            <a href="#">下一篇：没有了</a>
+            @endif
+        </div>
+    </div>
+    <div class="recommend-list-box">
+        <h3 class="min-head">
+            <i class="icon iconfont icon-liebiao1"></i>
+            推荐文章
+        </h3>
+        <ul class="recommend-list-msg">
+            @foreach($recommends as $v)
+            <li>
+                <a href="{{asset($navigation->pinyin.'/'.$v->id.'.html')}}">
+                    <img src="{{url($v->image_urls[0])}}" alt="">
+                    <div class="recommend-list-right">
+                        <span>{{$v->title}}</span>
+                        <time>{{$v->created_at}}</time>
+                    </div>
+                </a>
+            </li>
+            @endforeach
+        </ul>
+        <h3 class="min-head" style="margin-top: 9px">
+            <i class="icon iconfont icon-liebiao1"></i>
+            热门文章
+        </h3>
+        <ul class="recommend-list-msg">
+            @foreach($hots as $v)
+            <li>
+                <a href="{{asset($navigation->pinyin.'/'.$v->id.'.html')}}">
+                    <img src="{{url($v->image_urls[0])}}" alt="">
+                    <div class="recommend-list-right">
+                        <span>{{$v->title}}</span>
+                        <time>{{$v->created_at}}</time>
+                    </div>
+                </a>
+            </li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+<div class="new-foot-box">
+    <div class="new-foot-msg">
+        <ul>
+            <li>
+                <h5>关于本站</h5>
+                <p>测试</p>
+            </li>
+            <li>
+                <h5>联系我们</h5>
+                <p>YelongCu</p>
+                <p>email@qq.com</p>
+            </li>
+            <li>
+                <h5>特别鸣谢</h5>
+                < @foreach($blogrolls as $v)
+                <p><a href="{{$v->link}}" target="_blank">{{$v->title}}</a></p>
+                @endforeach
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+<script src="{{$static}}/js/jquery.min.js"></script>
+<script src="{{$static}}/js/rem.js"></script>
+<script>
+    $('.home').click(function () {
+        $('.wap-nav-list').css('display', 'none');
+        $('.wap-nav-seek').css('display', 'none');
+    })
+    $('.wap-nav-icon').click(function () {
+        $('.wap-nav-list').css('display', 'block');
+    })
+    $('.seek').click(function () {
+        $('.wap-nav-list').css('display', 'none');
+        $('.wap-nav-seek').css('display', 'block');
+    })
+    $('.go-seek').click(function () {
+        $('.wap-nav-seek').css('display', 'none');
+    })
+</script>
+</html>
